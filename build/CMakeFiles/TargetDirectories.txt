@@ -1,0 +1,9 @@
+/Users/scottmiller/VSC/CPP/Yahtzee/build/CMakeFiles/Dice.dir
+/Users/scottmiller/VSC/CPP/Yahtzee/build/CMakeFiles/edit_cache.dir
+/Users/scottmiller/VSC/CPP/Yahtzee/build/CMakeFiles/rebuild_cache.dir
+/Users/scottmiller/VSC/CPP/Yahtzee/build/CMakeFiles/list_install_components.dir
+/Users/scottmiller/VSC/CPP/Yahtzee/build/CMakeFiles/install.dir
+/Users/scottmiller/VSC/CPP/Yahtzee/build/CMakeFiles/install/local.dir
+/Users/scottmiller/VSC/CPP/Yahtzee/build/CMakeFiles/install/strip.dir
+/Users/scottmiller/VSC/CPP/Yahtzee/build/CMakeFiles/Dice_autogen_timestamp_deps.dir
+/Users/scottmiller/VSC/CPP/Yahtzee/build/CMakeFiles/Dice_autogen.dir

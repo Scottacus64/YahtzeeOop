@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/Users/scottmiller/VSC/CPP/Yahtzee/build",
+  "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/Users/scottmiller/VSC/CPP/Yahtzee/build/Dice_autogen/include -isystem /usr/local/lib/QtCore.framework/Headers -iframework /usr/local/lib -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/include -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -g -std=gnu++17 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fPIC -o CMakeFiles/Dice.dir/Dice_autogen/mocs_compilation.cpp.o -c /Users/scottmiller/VSC/CPP/Yahtzee/build/Dice_autogen/mocs_compilation.cpp",
+  "file": "/Users/scottmiller/VSC/CPP/Yahtzee/build/Dice_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/Dice.dir/Dice_autogen/mocs_compilation.cpp.o"
+},
+{
+  "directory": "/Users/scottmiller/VSC/CPP/Yahtzee/build",
+  "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/Users/scottmiller/VSC/CPP/Yahtzee/build/Dice_autogen/include -isystem /usr/local/lib/QtCore.framework/Headers -iframework /usr/local/lib -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/include -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -g -std=gnu++17 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fPIC -o CMakeFiles/Dice.dir/main.cpp.o -c /Users/scottmiller/VSC/CPP/Yahtzee/main.cpp",
+  "file": "/Users/scottmiller/VSC/CPP/Yahtzee/main.cpp",
+  "output": "CMakeFiles/Dice.dir/main.cpp.o"
+},
+{
+  "directory": "/Users/scottmiller/VSC/CPP/Yahtzee/build",
+  "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/Users/scottmiller/VSC/CPP/Yahtzee/build/Dice_autogen/include -isystem /usr/local/lib/QtCore.framework/Headers -iframework /usr/local/lib -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/include -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -g -std=gnu++17 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fPIC -o CMakeFiles/Dice.dir/yahtzeeUI.cpp.o -c /Users/scottmiller/VSC/CPP/Yahtzee/yahtzeeUI.cpp",
+  "file": "/Users/scottmiller/VSC/CPP/Yahtzee/yahtzeeUI.cpp",
+  "output": "CMakeFiles/Dice.dir/yahtzeeUI.cpp.o"
+},
+{
+  "directory": "/Users/scottmiller/VSC/CPP/Yahtzee/build",
+  "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/Users/scottmiller/VSC/CPP/Yahtzee/build/Dice_autogen/include -isystem /usr/local/lib/QtCore.framework/Headers -iframework /usr/local/lib -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/include -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -g -std=gnu++17 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fPIC -o CMakeFiles/Dice.dir/dice.cpp.o -c /Users/scottmiller/VSC/CPP/Yahtzee/dice.cpp",
+  "file": "/Users/scottmiller/VSC/CPP/Yahtzee/dice.cpp",
+  "output": "CMakeFiles/Dice.dir/dice.cpp.o"
+},
+{
+  "directory": "/Users/scottmiller/VSC/CPP/Yahtzee/build",
+  "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/Users/scottmiller/VSC/CPP/Yahtzee/build/Dice_autogen/include -isystem /usr/local/lib/QtCore.framework/Headers -iframework /usr/local/lib -isystem /usr/local/share/qt/mkspecs/macx-clang -isystem /usr/local/include -isystem /usr/local/lib/QtWidgets.framework/Headers -isystem /usr/local/lib/QtGui.framework/Headers -g -std=gnu++17 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fPIC -o CMakeFiles/Dice.dir/yahtzeeGame.cpp.o -c /Users/scottmiller/VSC/CPP/Yahtzee/yahtzeeGame.cpp",
+  "file": "/Users/scottmiller/VSC/CPP/Yahtzee/yahtzeeGame.cpp",
+  "output": "CMakeFiles/Dice.dir/yahtzeeGame.cpp.o"
+}
+]
