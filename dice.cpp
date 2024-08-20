@@ -1,4 +1,4 @@
-#include "dice.h"
+#include "Dice.h"
 #include <iostream>
 
 using namespace std;

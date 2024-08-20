@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+efd79069d254ff38455d89f2e1923f66 CMakeFiles/Yahtzee_autogen
+d9aae37434f017ad7b34f1eb95cab869 Yahtzee_autogen/timestamp

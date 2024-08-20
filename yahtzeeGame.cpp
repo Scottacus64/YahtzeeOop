@@ -1,4 +1,4 @@
-#include "yahtzeeGame.h"
+#include "YahtzeeGame.h"
 #include <iostream>
 
 YahtzeeGame::YahtzeeGame()
@@ -13,11 +13,6 @@ YahtzeeGame::YahtzeeGame()
 YahtzeeGame::~YahtzeeGame()
 {}
 
-/*
-std::shared_ptr<Dice> YahtzeeGame::getDice(int index) {
-    return diceArray[index];        // Return the shared_ptr to the requested dice
-}
-*/
 
 void YahtzeeGame::clickDie(int i)
 {

@@ -1,4 +1,4 @@
-#include "dice.h"
+#include "Dice.h"
 #include <memory> // Include the memory header for shared_ptr
 
 class YahtzeeGame
@@ -34,14 +34,6 @@ class YahtzeeGame
         Dice* getDiceArrayPtr(int slot);
         int   getYahtzeePad(int row, int col);
 
-        
-
-        //void newGame();
-        //int totalUpTop();
-        //int totalUpBottom();
-        //int checkBonus();
-        //std::shared_ptr<Dice> getDice(int index); // Return shared_ptr to Dice
-
     private:
         int  rolls;
         int  yahtzeePad[3][21];
@@ -54,14 +46,5 @@ class YahtzeeGame
         bool yahtzeeBonusFlag = false;
         bool yahtzeeOn = false;
         bool yahtzeeCheck = false;
-        
-        /*
-        int upperSection[4][7];
-        int upperTotal[4];
-        int lowerSection[4][7];
-        int yahtzeeBonus[4];
-        int lowerTotal[4];       
-        int grandTotal;
-        */
-        //std::shared_ptr<Dice> diceArray[5]; // Array of shared pointers to Dice
+
 };
