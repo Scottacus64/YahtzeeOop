@@ -1063,7 +1063,7 @@ CMakeFiles/Yahtzee.dir/YahtzeeUI.cpp.o: \
   /opt/homebrew/include/QtWidgets/qwidget.h \
   /Users/scottmiller/VSC/CPP/Yahtzee/YahtzeeGame.h \
   /Users/scottmiller/VSC/CPP/Yahtzee/Dice.h \
-  /Users/scottmiller/VSC/CPP/Yahtzee/UI_YahtzeeUI.h \
+  /Users/scottmiller/VSC/CPP/Yahtzee/YahtzeeUiSetup.h \
   /opt/homebrew/include/QtCore/QVariant \
   /opt/homebrew/lib/QtCore.framework/Headers/qvariant.h \
   /opt/homebrew/include/QtGui/QIcon \

@@ -1,6 +1,6 @@
 
-#ifndef UI_YAHTZEEUI_H
-#define UI_YAHTZEEUI_H
+#ifndef YAHTZEEUISETUP_H
+#define YAHTZEEUISETUP_H
 
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
@@ -16,7 +16,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_YahtzeeUI
+class YahtzeeUiSetup
 {
 public:
     QPushButton* dieButton[5];
@@ -34,7 +34,6 @@ public:
         if (YahtzeeUI->objectName().isEmpty())
             YahtzeeUI->setObjectName("Yahtzee");
         YahtzeeUI->resize(648, 878);
-        //YahtzeeUI->setStyleSheet("background-image: url(/Users/scottmiller/VSC/CPP/Yahtzee/resources/green.png);");
 
         layoutWidget = new QWidget(YahtzeeUI);
         layoutWidget->setObjectName("layoutWidget");
@@ -103,7 +102,7 @@ public:
         tableWidget->setGeometry(QRect(90, 160, 451, 661));
         tableWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         tableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        tableWidget->setIconSize(QSize(10, 10));
+        //tableWidget->setIconSize(QSize(10, 10));
         tableWidget->setRowCount(22);
         tableWidget->setColumnCount(4);
         tableWidget->horizontalHeader()->setVisible(false);
@@ -111,32 +110,28 @@ public:
         tableWidget->verticalHeader()->setVisible(false);
         tableWidget->verticalHeader()->setHighlightSections(false);
 
-        line = new QFrame(YahtzeeUI);
-        line->setObjectName("line");
-        line->setGeometry(QRect(90, 450, 451, 20));
-        line->setFrameShape(QFrame::HLine);
-        line->setFrameShadow(QFrame::Sunken);
-        line_2 = new QFrame(YahtzeeUI);
-        line_2->setObjectName("line_2");
-        line_2->setGeometry(QRect(90, 480, 451, 20));
-        line_2->setFrameShape(QFrame::HLine);
-        line_2->setFrameShadow(QFrame::Sunken);
-
         tableWidget_2 = new QTableWidget(YahtzeeUI);
         if (tableWidget_2->columnCount() < 2)
             tableWidget_2->setColumnCount(2);
         if (tableWidget_2->rowCount() < 1)
             tableWidget_2->setRowCount(1);
 
-        QTableWidgetItem *__qtablewidgetitem88 = new QTableWidgetItem();
-        __qtablewidgetitem88->setFlags(Qt::ItemIsEnabled);
-        tableWidget_2->setItem(0, 0, __qtablewidgetitem88);
-        QTableWidgetItem *__qtablewidgetitem89 = new QTableWidgetItem();
-        __qtablewidgetitem89->setFlags(Qt::ItemIsEnabled);
+        line = new QFrame(YahtzeeUI);
+        //line->setObjectName("line");
+        line->setGeometry(QRect(90, 450, 451, 20));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
+        line_2 = new QFrame(YahtzeeUI);
+        //line_2->setObjectName("line_2");
+        line_2->setGeometry(QRect(90, 480, 451, 20));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
 
         QFont font;
         font.setPointSize(18);
-        tableWidget_2->setItem(0, 1, __qtablewidgetitem89);
+        QTableWidgetItem *grandTotal = new QTableWidgetItem();
+        grandTotal->setFlags(Qt::ItemIsEnabled);
+        tableWidget_2->setItem(0, 0, grandTotal);
         tableWidget_2->setObjectName("tableWidget_2");
         tableWidget_2->setGeometry(QRect(220, 830, 201, 31));
         tableWidget_2->setFont(font);
@@ -157,9 +152,9 @@ public:
 };
 
 namespace Ui {
-    class YahtzeeUI: public Ui_YahtzeeUI {};
+    class YahtzeeUI: public YahtzeeUiSetup {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_YAHTZEEUI_H
+#endif // YAHTZEEUISETUP_H

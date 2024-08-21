@@ -1,5 +1,5 @@
 #include "YahtzeeUI.h"
-#include "UI_YahtzeeUI.h"
+#include "YahtzeeUiSetup.h"
 #include <iostream>
 #include <QTimer>
 #include <QPainter>
