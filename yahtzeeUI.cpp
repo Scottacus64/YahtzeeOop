@@ -3,19 +3,24 @@
 #include <iostream>
 #include <QTimer>
 #include <QPainter>
+#include <QDir>
 
 YahtzeeUI::YahtzeeUI(QWidget *parent)
     : QWidget(parent), ui(new Ui::YahtzeeUI)
 {
     ui->setupUi(this);
 
+    QString appDir = QCoreApplication::applicationDirPath();
+    QString assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
+
     for(int i=0; i<13; i++)
     {
-        QString diceImages = "/Users/scottmiller/VSC/CPP/Yahtzee/resources/dice" + QString::number(i) + ".png";
-        pixmaps[i] = QPixmap(diceImages);
+        QString pathway = assetPath + "dice" + QString::number(i) + ".png";
+        std::cout << pathway.toStdString() << std::endl;
+        pixmaps[i] = QPixmap(pathway);
     }
 
-    background = QPixmap(QString("/Users/scottmiller/VSC/CPP/Yahtzee/resources/green"));
+    background = QPixmap(QString(assetPath + "green.png"));
    
     for(int i=0; i<5; i++)
     {
@@ -27,6 +32,7 @@ YahtzeeUI::YahtzeeUI(QWidget *parent)
     int lastColumnClicked = 0;
     ui->tableWidget->setColumnWidth(0, 150);   
     ui->tableWidget->setEnabled(false);
+    std::cout << "Asset Path" << assetPath.toStdString() << std::endl;
     m_pYahtzee = new YahtzeeGame();
 }
 

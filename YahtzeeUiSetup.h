@@ -94,6 +94,26 @@ public:
                     cell[i][j]->setFlags(cell[i][j]->flags() & ~Qt::ItemIsSelectable & ~Qt::ItemIsEnabled);     // non-clickable
                     cell[i][j]->setForeground(QBrush(QColor(Qt::black)));   // makes text not be greyed out even though non-clickable
                 }
+                if(j==0)
+                {
+                    QColor transparentColor(255, 239, 219, 127);  // Red color with 50% transparency
+                    cell[i][j]->setBackground(transparentColor);
+                }
+                if(j==1)
+                {
+                    QColor transparentColor(210, 180, 140, 127);  // Red color with 50% transparency
+                    cell[i][j]->setBackground(transparentColor);
+                }
+                if(j==2)
+                {
+                    QColor transparentColor(198, 150, 94, 127);  // Red color with 50% transparency
+                    cell[i][j]->setBackground(transparentColor);
+                }
+                if(j==3)
+                {  
+                    QColor transparentColor(184, 134, 11, 127);  // Red color with 50% transparency
+                    cell[i][j]->setBackground(transparentColor);
+                }
                 tableWidget->setItem(i, j, cell[i][j]);    
             }
         }
