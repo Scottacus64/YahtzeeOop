@@ -345,11 +345,11 @@
 	"dependencies" : 
 	[
 		{
-			"id" : "Yahtzee_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
-		},
-		{
 			"backtrace" : 0,
 			"id" : "Yahtzee_autogen::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "Yahtzee_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "Yahtzee::@6890427a1f51a3e7e1df",

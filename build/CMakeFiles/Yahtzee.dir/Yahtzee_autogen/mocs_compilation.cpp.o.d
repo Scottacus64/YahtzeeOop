@@ -1064,4 +1064,53 @@ CMakeFiles/Yahtzee.dir/Yahtzee_autogen/mocs_compilation.cpp.o: \
   /opt/homebrew/include/QtWidgets/qwidget.h \
   /Users/scottmiller/VSC/CPP/Yahtzee/build/Yahtzee_autogen/EWIEGA46WW/../../../YahtzeeGame.h \
   /Users/scottmiller/VSC/CPP/Yahtzee/build/Yahtzee_autogen/EWIEGA46WW/../../../Dice.h \
+  /Users/scottmiller/VSC/CPP/Yahtzee/build/Yahtzee_autogen/EWIEGA46WW/../../../YahtzeeUiSetup.h \
+  /opt/homebrew/include/QtCore/QVariant \
+  /opt/homebrew/lib/QtCore.framework/Headers/qvariant.h \
+  /opt/homebrew/include/QtGui/QIcon \
+  /opt/homebrew/lib/QtGui.framework/Headers/qicon.h \
+  /opt/homebrew/include/QtWidgets/QApplication \
+  /opt/homebrew/lib/QtWidgets.framework/Headers/qapplication.h \
+  /opt/homebrew/include/QtCore/qcoreapplication.h \
+  /opt/homebrew/include/QtCore/qcoreevent.h \
+  /opt/homebrew/include/QtCore/qdeadlinetimer.h \
+  /opt/homebrew/include/QtCore/qelapsedtimer.h \
+  /opt/homebrew/include/QtCore/qeventloop.h \
+  /opt/homebrew/include/QtCore/qnativeinterface.h \
+  /opt/homebrew/include/QtCore/qcoreapplication_platform.h \
+  /opt/homebrew/include/QtGui/qguiapplication.h \
+  /opt/homebrew/include/QtGui/qinputmethod.h \
+  /opt/homebrew/include/QtCore/qlocale.h \
+  /opt/homebrew/include/QtGui/qguiapplication_platform.h \
+  /opt/homebrew/include/QtWidgets/QFrame \
+  /opt/homebrew/lib/QtWidgets.framework/Headers/qframe.h \
+  /opt/homebrew/include/QtWidgets/QHBoxLayout \
+  /opt/homebrew/lib/QtWidgets.framework/Headers/qboxlayout.h \
+  /opt/homebrew/include/QtWidgets/qlayout.h \
+  /opt/homebrew/include/QtWidgets/qlayoutitem.h \
+  /opt/homebrew/include/QtWidgets/qboxlayout.h \
+  /opt/homebrew/include/QtWidgets/qgridlayout.h \
+  /opt/homebrew/include/QtWidgets/QHeaderView \
+  /opt/homebrew/lib/QtWidgets.framework/Headers/qheaderview.h \
+  /opt/homebrew/include/QtWidgets/qabstractitemview.h \
+  /opt/homebrew/include/QtWidgets/qabstractscrollarea.h \
+  /opt/homebrew/include/QtWidgets/qframe.h \
+  /opt/homebrew/include/QtCore/qabstractitemmodel.h \
+  /opt/homebrew/include/QtCore/qitemselectionmodel.h \
+  /opt/homebrew/include/QtWidgets/qabstractitemdelegate.h \
+  /opt/homebrew/include/QtWidgets/qstyleoption.h \
+  /opt/homebrew/include/QtWidgets/qabstractspinbox.h \
+  /opt/homebrew/include/QtGui/qvalidator.h \
+  /opt/homebrew/include/QtCore/qregularexpression.h \
+  /opt/homebrew/include/QtWidgets/qslider.h \
+  /opt/homebrew/include/QtWidgets/qabstractslider.h \
+  /opt/homebrew/include/QtWidgets/qstyle.h \
+  /opt/homebrew/include/QtWidgets/qtabbar.h \
+  /opt/homebrew/include/QtWidgets/qtabwidget.h \
+  /opt/homebrew/include/QtWidgets/qrubberband.h \
+  /opt/homebrew/include/QtWidgets/QPushButton \
+  /opt/homebrew/include/QtWidgets/QTableWidget \
+  /opt/homebrew/lib/QtWidgets.framework/Headers/qtablewidget.h \
+  /opt/homebrew/include/QtWidgets/qtableview.h \
+  /opt/homebrew/include/QtWidgets/QWidget \
   /opt/homebrew/include/QtCore/qtmochelpers.h

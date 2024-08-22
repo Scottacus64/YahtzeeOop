@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include "YahtzeeGame.h"
+#include "YahtzeeUiSetup.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class YahtzeeUI; }
@@ -49,8 +50,6 @@ private:
     QPixmap pixmaps[13];
     int lastRowClicked = 0;
     int lastColumnClicked = 0;
-
-    //YahtzeeGame m_Yahtzee;
-    YahtzeeGame* m_pYahtzee;
+    YahtzeeGame* m_pYahtzeeGame;
 };
 #endif // YahtzeeUI_H

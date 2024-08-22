@@ -24,16 +24,16 @@ YahtzeeUI::YahtzeeUI(QWidget *parent)
    
     for(int i=0; i<5; i++)
     {
-        dicePB[i] = ui->dieButton[i];
+        dicePB[i] = ui->m_dieButton[i];
     }
 
     for (int i=0; i<5; i++) {dicePB[i]->setIcon(pixmaps[0]);}
     int lastRowClicked = 0;
     int lastColumnClicked = 0;
-    ui->tableWidget->setColumnWidth(0, 150);   
-    ui->tableWidget->setEnabled(false);
+    ui->m_tableWidget->setColumnWidth(0, 150);   
+    ui->m_tableWidget->setEnabled(false);
     std::cout << "Asset Path" << assetPath.toStdString() << std::endl;
-    m_pYahtzee = new YahtzeeGame();
+    m_pYahtzeeGame = new YahtzeeGame();
 }
 
 
@@ -45,56 +45,67 @@ YahtzeeUI::~YahtzeeUI()
 
 void YahtzeeUI::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    // Paint the green background image
     painter.drawPixmap(0, 0, width(), height(), background);
 }
 
 
 void YahtzeeUI::on_rollButton_clicked()
 {
-    bool gameOver = m_pYahtzee->checkGameOver();
- 
+    bool gameOver = m_pYahtzeeGame->checkGameOver();
     if (gameOver == true)
     {
-        ui->tableWidget_2->setItem(0,1,nullptr);
-        ui->rollButton->setText("Roll");
-        m_pYahtzee-> clearPad();
+        ui->m_tableWidgetTotal->setItem(0,1,nullptr);
+        ui->m_rollButton->setText("Roll");
+        m_pYahtzeeGame-> clearPad();
         refreshTable();
     }
+    else
+    {
+        m_pYahtzeeGame->newGame();
+    }
+    
     for(int i=0; i<6; i++)
     {
-        ui->dieButton[i]->setEnabled(true);
+        ui->m_dieButton[i]->setEnabled(true);
     }
-    ui->tableWidget->setEnabled(true);
+    ui->m_tableWidget->setEnabled(true);
     lastRowClicked = 0;
     lastColumnClicked = 0;
-    int rolls = m_pYahtzee->getRolls();
+    int rolls = m_pYahtzeeGame->getRolls();
+
+    // Clear focus from the table widget
+    ui->m_tableWidget->clearFocus();
+    ui->m_tableWidget->setCurrentItem(nullptr);
+
+    // Deselect all cells
+    ui->m_tableWidget->setCurrentCell(-1, -1);
+    ui->m_tableWidget->clearSelection();
 
     if (rolls == 0)
     {
         for (int i=0; i<5; i++)
         {
-            Dice* dicePtr = m_pYahtzee->getDiceArrayPtr(i);
+            Dice* dicePtr = m_pYahtzeeGame->getDiceArrayPtr(i);
             dicePtr->setClicked();
         }
     }
 
     rolls +=1;
-    m_pYahtzee->setRolls(rolls);
+    m_pYahtzeeGame->setRolls(rolls);
 
     switch(rolls)
     {
     case 0:
-        ui->rollButton->setText("Roll");
+        ui->m_rollButton->setText("Roll");
         break;        
     case 1:
-        ui->rollButton->setText("2 Rolls Left");
+        ui->m_rollButton->setText("2 Rolls Left");
         break;
     case 2:
-        ui->rollButton->setText("1 Roll Left");
+        ui->m_rollButton->setText("1 Roll Left");
         break;
     default:
-        ui->rollButton->setText("Click Below");
+        ui->m_rollButton->setText("Click Below");
         break;
     }
 
@@ -106,7 +117,7 @@ void YahtzeeUI::on_rollButton_clicked()
         {
             for (int i=0; i<5; i++)
             {
-                m_pYahtzee->rollDice(i);
+                m_pYahtzeeGame->rollDice(i);
                 setDiePixmap(i);
             }
             timer.start();
@@ -121,42 +132,42 @@ void YahtzeeUI::on_rollButton_clicked()
 
 void YahtzeeUI::on_DieButton_0_clicked()
 {
-    m_pYahtzee->clickDie(0);
+    m_pYahtzeeGame->clickDie(0);
     setDiePixmap(0);
 }
 
 
 void YahtzeeUI::on_DieButton_1_clicked()
 {
-    m_pYahtzee->clickDie(1);
+    m_pYahtzeeGame->clickDie(1);
     setDiePixmap(1);       
 }
 
 
 void YahtzeeUI::on_DieButton_2_clicked()
 {
-    m_pYahtzee->clickDie(2);
+    m_pYahtzeeGame->clickDie(2);
     setDiePixmap(2);
 }
 
 
 void YahtzeeUI::on_DieButton_3_clicked()
 {
-    m_pYahtzee->clickDie(3);
+    m_pYahtzeeGame->clickDie(3);
     setDiePixmap(3);
 }
 
 
 void YahtzeeUI::on_DieButton_4_clicked()
 {
-    m_pYahtzee->clickDie(4);
+    m_pYahtzeeGame->clickDie(4);
     setDiePixmap(4);
 }
 
 
 void YahtzeeUI::setDiePixmap(int slot)
 {
-    Dice* dicePtr = m_pYahtzee->getDiceArrayPtr(slot);
+    Dice* dicePtr = m_pYahtzeeGame->getDiceArrayPtr(slot);
 
     int value = dicePtr->getValue();   
     bool clicked = dicePtr->getClicked();  
@@ -174,39 +185,44 @@ void YahtzeeUI::setDiePixmap(int slot)
 
 void YahtzeeUI::on_tableWidget_cellClicked(int row, int col)
 {
-    m_pYahtzee->setRolls(0);
-    ui->rollButton->setText("Roll");
-    bool done = false;
-    done = m_pYahtzee->enterScore(row, col);
-    refreshTable();
-    done = m_pYahtzee->checkGameOver();
-    if (done == true) {ui->rollButton->setText("New Game?");}
-
+    bool gameOver = m_pYahtzeeGame->checkGameOver();
+    if (gameOver == false)
+    {
+        m_pYahtzeeGame->setRolls(0);
+        ui->m_rollButton->setText("Roll");
+        bool done = false;
+        m_pYahtzeeGame->enterScore(row, col);
+        refreshTable();
+        done = m_pYahtzeeGame->checkGameOver();
+        if (done == true) {ui->m_rollButton->setText("New Game?");}
+    }
 }
 
 
 void YahtzeeUI::refreshTable()
 {
-    for (int col=0; col<3; col++)
+    for (int row = 0; row < 21; row++)
     {
-        for (int row=0; row<21; row++)
+        for (int col = 0; col < 3; col++)
         {
-            if(row != 19)
+            int value = m_pYahtzeeGame->getYahtzeePad(row, col);
+            std::cout << "value = " << value << " " << row << col <<std::endl;
+            if (value < 10000)
             {
-                int value = m_pYahtzee->getYahtzeePad(row, col);
-                if (value < 10000)
-                {
-                    QTableWidgetItem *item = new QTableWidgetItem(QString::number(value));
-                    ui->tableWidget->setItem(row+1, col+1, item);
-                }
-                else
-                {          
-                    ui->tableWidget->setItem(row+1, col+1, nullptr);
-                }
+                QTableWidgetItem* pItem = ui->m_tableWidget->item(row+1, col+1);
+                pItem->setText(QString::number(value));
+                //ui->m_tableWidget->setItem(row+1, col+1, pItem);
+            }
+            else
+            {
+                QTableWidgetItem* pItem = ui->m_tableWidget->item(row+1, col+1);
+                pItem->setText(QString());
             }
         }
     }
+    std::cout << "\n" << std::endl;
     
-    QTableWidgetItem *item6 = new QTableWidgetItem(QString::number(m_pYahtzee->getGrandTotal()));
-     ui->tableWidget_2->setItem(0, 1, item6);
+    QTableWidgetItem *item6 = new QTableWidgetItem(QString::number(m_pYahtzeeGame->getGrandTotal()));
+    ui->m_tableWidgetTotal->setItem(0, 1, item6);
 }
+

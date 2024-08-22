@@ -15,6 +15,7 @@ class YahtzeeGame
         int* bubbleSort();
         int* bubbleSort2(int* values);
         bool enterScore(int row, int col);
+        void newGame();
 
         bool checkTopSection(int row, int col);
         bool checkThreeOfaKind(int col);

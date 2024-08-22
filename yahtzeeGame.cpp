@@ -26,11 +26,19 @@ void YahtzeeGame::rollDice(int i)
     yahtzeeBonusFlag = false;
     yahtzeeOn = false;
     yahtzeeCheck = false;
+    gameOver = false;
 }
 
 bool YahtzeeGame::checkGameOver()
 {
     return gameOver;
+}
+
+
+void YahtzeeGame::newGame()
+{
+    gameOver = false;
+    std::cout << "Game On!" << std::endl;
 }
 
 void YahtzeeGame::clearPad()

@@ -1,8 +1,8 @@
-CMakeFiles/Yahtzee.dir/Main.cpp.o: \
-  /Users/scottmiller/VSC/CPP/Yahtzee/Main.cpp \
-  /Users/scottmiller/VSC/CPP/Yahtzee/YahtzeeUI.h \
-  /opt/homebrew/lib/QtWidgets.framework/Headers/QWidget \
-  /opt/homebrew/lib/QtWidgets.framework/Headers/qwidget.h \
+CMakeFiles/Yahtzee.dir/CustomHighlightDelegate.cpp.o: \
+  /Users/scottmiller/VSC/CPP/Yahtzee/CustomHighlightDelegate.cpp \
+  /Users/scottmiller/VSC/CPP/Yahtzee/CustomHighlightDelegate.h \
+  /opt/homebrew/lib/QtWidgets.framework/Headers/QStyledItemDelegate \
+  /opt/homebrew/lib/QtWidgets.framework/Headers/qstyleditemdelegate.h \
   /opt/homebrew/include/QtWidgets/qtwidgetsglobal.h \
   /opt/homebrew/include/QtGui/qtguiglobal.h \
   /opt/homebrew/include/QtCore/qglobal.h \
@@ -541,13 +541,13 @@ CMakeFiles/Yahtzee.dir/Main.cpp.o: \
   /opt/homebrew/include/QtGui/qtguiexports.h \
   /opt/homebrew/include/QtWidgets/qtwidgets-config.h \
   /opt/homebrew/include/QtWidgets/qtwidgetsexports.h \
-  /opt/homebrew/include/QtGui/qwindowdefs.h \
+  /opt/homebrew/include/QtWidgets/qabstractitemdelegate.h \
+  /opt/homebrew/include/QtCore/qobject.h \
   /opt/homebrew/include/QtCore/qobjectdefs.h \
   /opt/homebrew/include/QtCore/qnamespace.h \
   /opt/homebrew/include/QtCore/qtmetamacros.h \
   /opt/homebrew/include/QtCore/qobjectdefs_impl.h \
   /opt/homebrew/include/QtCore/qfunctionaltools_impl.h \
-  /opt/homebrew/include/QtCore/qobject.h \
   /opt/homebrew/include/QtCore/qstring.h \
   /opt/homebrew/include/QtCore/qchar.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/functional \
@@ -1017,8 +1017,25 @@ CMakeFiles/Yahtzee.dir/Main.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/__chrono/year_month_day.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/__chrono/year_month_weekday.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/__chrono/literals.h \
-  /opt/homebrew/include/QtCore/qmargins.h \
+  /opt/homebrew/include/QtWidgets/qstyleoption.h \
+  /opt/homebrew/include/QtCore/qlocale.h \
+  /opt/homebrew/include/QtCore/qvariant.h \
+  /opt/homebrew/include/QtCore/qdebug.h \
+  /opt/homebrew/include/QtCore/qtextstream.h \
+  /opt/homebrew/include/QtCore/qcontiguouscache.h \
+  /opt/homebrew/include/QtCore/qsharedpointer.h \
+  /opt/homebrew/include/QtCore/qshareddata.h \
+  /opt/homebrew/include/QtCore/qsharedpointer_impl.h \
+  /opt/homebrew/include/QtCore/qmap.h \
+  /opt/homebrew/include/QtCore/qshareddata_impl.h \
+  /opt/homebrew/include/QtCore/qset.h \
+  /opt/homebrew/include/QtCore/qhash.h \
+  /opt/homebrew/include/QtCore/qvarlengtharray.h \
   /opt/homebrew/include/QtCore/q23utility.h \
+  /opt/homebrew/include/QtWidgets/qabstractspinbox.h \
+  /opt/homebrew/include/QtWidgets/qwidget.h \
+  /opt/homebrew/include/QtGui/qwindowdefs.h \
+  /opt/homebrew/include/QtCore/qmargins.h \
   /opt/homebrew/include/QtGui/qaction.h \
   /opt/homebrew/include/QtGui/qkeysequence.h \
   /opt/homebrew/include/QtGui/qicon.h \
@@ -1030,24 +1047,12 @@ CMakeFiles/Yahtzee.dir/Main.cpp.o: \
   /opt/homebrew/include/QtGui/qcolor.h \
   /opt/homebrew/include/QtGui/qrgb.h \
   /opt/homebrew/include/QtGui/qrgba64.h \
-  /opt/homebrew/include/QtCore/qshareddata.h \
   /opt/homebrew/include/QtGui/qimage.h \
   /opt/homebrew/include/QtGui/qpixelformat.h \
   /opt/homebrew/include/QtGui/qtransform.h \
   /opt/homebrew/include/QtGui/qpolygon.h \
   /opt/homebrew/include/QtGui/qregion.h \
   /opt/homebrew/include/QtCore/qline.h \
-  /opt/homebrew/include/QtCore/qvariant.h \
-  /opt/homebrew/include/QtCore/qdebug.h \
-  /opt/homebrew/include/QtCore/qtextstream.h \
-  /opt/homebrew/include/QtCore/qcontiguouscache.h \
-  /opt/homebrew/include/QtCore/qsharedpointer.h \
-  /opt/homebrew/include/QtCore/qsharedpointer_impl.h \
-  /opt/homebrew/include/QtCore/qmap.h \
-  /opt/homebrew/include/QtCore/qshareddata_impl.h \
-  /opt/homebrew/include/QtCore/qset.h \
-  /opt/homebrew/include/QtCore/qhash.h \
-  /opt/homebrew/include/QtCore/qvarlengtharray.h \
   /opt/homebrew/include/QtGui/qpalette.h \
   /opt/homebrew/include/QtGui/qbrush.h \
   /opt/homebrew/include/QtGui/qfont.h \
@@ -1057,48 +1062,6 @@ CMakeFiles/Yahtzee.dir/Main.cpp.o: \
   /opt/homebrew/include/QtWidgets/qsizepolicy.h \
   /opt/homebrew/include/QtGui/qcursor.h \
   /opt/homebrew/include/QtGui/qbitmap.h \
-  /opt/homebrew/lib/QtWidgets.framework/Headers/QPushButton \
-  /opt/homebrew/lib/QtWidgets.framework/Headers/qpushbutton.h \
-  /opt/homebrew/include/QtWidgets/qabstractbutton.h \
-  /opt/homebrew/include/QtWidgets/qwidget.h \
-  /Users/scottmiller/VSC/CPP/Yahtzee/YahtzeeGame.h \
-  /Users/scottmiller/VSC/CPP/Yahtzee/Dice.h \
-  /Users/scottmiller/VSC/CPP/Yahtzee/YahtzeeUiSetup.h \
-  /opt/homebrew/include/QtCore/QVariant \
-  /opt/homebrew/lib/QtCore.framework/Headers/qvariant.h \
-  /opt/homebrew/include/QtGui/QIcon \
-  /opt/homebrew/lib/QtGui.framework/Headers/qicon.h \
-  /opt/homebrew/include/QtWidgets/QApplication \
-  /opt/homebrew/lib/QtWidgets.framework/Headers/qapplication.h \
-  /opt/homebrew/include/QtCore/qcoreapplication.h \
-  /opt/homebrew/include/QtCore/qcoreevent.h \
-  /opt/homebrew/include/QtCore/qdeadlinetimer.h \
-  /opt/homebrew/include/QtCore/qelapsedtimer.h \
-  /opt/homebrew/include/QtCore/qeventloop.h \
-  /opt/homebrew/include/QtCore/qnativeinterface.h \
-  /opt/homebrew/include/QtCore/qcoreapplication_platform.h \
-  /opt/homebrew/include/QtGui/qguiapplication.h \
-  /opt/homebrew/include/QtGui/qinputmethod.h \
-  /opt/homebrew/include/QtCore/qlocale.h \
-  /opt/homebrew/include/QtGui/qguiapplication_platform.h \
-  /opt/homebrew/include/QtWidgets/QFrame \
-  /opt/homebrew/lib/QtWidgets.framework/Headers/qframe.h \
-  /opt/homebrew/include/QtWidgets/QHBoxLayout \
-  /opt/homebrew/lib/QtWidgets.framework/Headers/qboxlayout.h \
-  /opt/homebrew/include/QtWidgets/qlayout.h \
-  /opt/homebrew/include/QtWidgets/qlayoutitem.h \
-  /opt/homebrew/include/QtWidgets/qboxlayout.h \
-  /opt/homebrew/include/QtWidgets/qgridlayout.h \
-  /opt/homebrew/include/QtWidgets/QHeaderView \
-  /opt/homebrew/lib/QtWidgets.framework/Headers/qheaderview.h \
-  /opt/homebrew/include/QtWidgets/qabstractitemview.h \
-  /opt/homebrew/include/QtWidgets/qabstractscrollarea.h \
-  /opt/homebrew/include/QtWidgets/qframe.h \
-  /opt/homebrew/include/QtCore/qabstractitemmodel.h \
-  /opt/homebrew/include/QtCore/qitemselectionmodel.h \
-  /opt/homebrew/include/QtWidgets/qabstractitemdelegate.h \
-  /opt/homebrew/include/QtWidgets/qstyleoption.h \
-  /opt/homebrew/include/QtWidgets/qabstractspinbox.h \
   /opt/homebrew/include/QtGui/qvalidator.h \
   /opt/homebrew/include/QtCore/qregularexpression.h \
   /opt/homebrew/include/QtWidgets/qslider.h \
@@ -1107,9 +1070,9 @@ CMakeFiles/Yahtzee.dir/Main.cpp.o: \
   /opt/homebrew/include/QtWidgets/qtabbar.h \
   /opt/homebrew/include/QtWidgets/qtabwidget.h \
   /opt/homebrew/include/QtWidgets/qrubberband.h \
-  /opt/homebrew/include/QtWidgets/QPushButton \
-  /opt/homebrew/include/QtWidgets/QTableWidget \
-  /opt/homebrew/lib/QtWidgets.framework/Headers/qtablewidget.h \
-  /opt/homebrew/include/QtWidgets/qtableview.h \
-  /opt/homebrew/include/QtWidgets/QWidget \
-  /opt/homebrew/lib/QtWidgets.framework/Headers/QApplication
+  /opt/homebrew/include/QtWidgets/qframe.h \
+  /opt/homebrew/include/QtCore/qabstractitemmodel.h \
+  /opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+  /opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+  /opt/homebrew/include/QtGui/qtextoption.h \
+  /opt/homebrew/include/QtGui/qpen.h
