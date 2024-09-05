@@ -7,6 +7,7 @@
 *****************************************************************************/
 
 #include "../../../YahtzeeUI.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>
@@ -45,7 +46,10 @@ constexpr auto qt_meta_stringdata_CLASSYahtzeeUIENDCLASS = QtMocHelpers::stringD
     "on_DieButton_4_clicked",
     "on_tableWidget_cellClicked",
     "row",
-    "column"
+    "column",
+    "on_leftArrow_clicked",
+    "on_rightArrow_clicked",
+    "on_enter_clicked"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -58,7 +62,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSYahtzeeUIENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -66,13 +70,16 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSYahtzeeUIENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   56,    2, 0x08,    1 /* Private */,
-       3,    0,   57,    2, 0x08,    2 /* Private */,
-       4,    0,   58,    2, 0x08,    3 /* Private */,
-       5,    0,   59,    2, 0x08,    4 /* Private */,
-       6,    0,   60,    2, 0x08,    5 /* Private */,
-       7,    0,   61,    2, 0x08,    6 /* Private */,
-       8,    2,   62,    2, 0x08,    7 /* Private */,
+       1,    0,   74,    2, 0x08,    1 /* Private */,
+       3,    0,   75,    2, 0x08,    2 /* Private */,
+       4,    0,   76,    2, 0x08,    3 /* Private */,
+       5,    0,   77,    2, 0x08,    4 /* Private */,
+       6,    0,   78,    2, 0x08,    5 /* Private */,
+       7,    0,   79,    2, 0x08,    6 /* Private */,
+       8,    2,   80,    2, 0x08,    7 /* Private */,
+      11,    0,   85,    2, 0x08,   10 /* Private */,
+      12,    0,   86,    2, 0x08,   11 /* Private */,
+      13,    0,   87,    2, 0x08,   12 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -82,6 +89,9 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSYahtzeeUIENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    9,   10,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -110,7 +120,13 @@ Q_CONSTINIT const QMetaObject YahtzeeUI::staticMetaObject = { {
         // method 'on_tableWidget_cellClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
-        QtPrivate::TypeAndForceComplete<int, std::false_type>
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'on_leftArrow_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_rightArrow_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_enter_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
@@ -128,6 +144,9 @@ void YahtzeeUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 4: _t->on_DieButton_3_clicked(); break;
         case 5: _t->on_DieButton_4_clicked(); break;
         case 6: _t->on_tableWidget_cellClicked((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
+        case 7: _t->on_leftArrow_clicked(); break;
+        case 8: _t->on_rightArrow_clicked(); break;
+        case 9: _t->on_enter_clicked(); break;
         default: ;
         }
     }
@@ -152,13 +171,13 @@ int YahtzeeUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 10)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 7;
+        _id -= 10;
     }
     return _id;
 }

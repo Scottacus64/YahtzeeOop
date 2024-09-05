@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-83f50367ce42af20d800.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Yahtzee",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Yahtzee::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Yahtzee-Debug-88f9cb55a0d32d615520.json",
+					"name" : "Yahtzee",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Yahtzee_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Yahtzee_autogen-Debug-29886c4ec47a7aa8f0b0.json",
+					"name" : "Yahtzee_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Yahtzee_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Yahtzee_autogen_timestamp_deps-Debug-079ca603532765bb830e.json",
+					"name" : "Yahtzee_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/scottmiller/VSC/CPP/Yahtzee/build",
+		"source" : "/Users/scottmiller/VSC/CPP/Yahtzee"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

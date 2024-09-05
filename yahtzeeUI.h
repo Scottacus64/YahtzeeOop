@@ -1,10 +1,9 @@
 #ifndef YAHTZEEUI_H
 #define YAHTZEEUI_H
 
-#include <QWidget>
-#include <QPushButton>
 #include "YahtzeeGame.h"
 #include "YahtzeeUiSetup.h"
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class YahtzeeUI; }
@@ -20,6 +19,8 @@ public:
     void setDiePixmap(int slot);
     void refreshTable ();
     void paintEvent(QPaintEvent *event);
+    void getInitials();
+    void displayTopTen();
 
 private slots:
     void on_rollButton_clicked();
@@ -29,6 +30,9 @@ private slots:
     void on_DieButton_3_clicked();
     void on_DieButton_4_clicked();
     void on_tableWidget_cellClicked(int row, int column);
+    void on_leftArrow_clicked();
+    void on_rightArrow_clicked();
+    void on_enter_clicked();
 
 private:
     Ui::YahtzeeUI *ui;
@@ -46,10 +50,13 @@ private:
     QPixmap dice5b;
     QPixmap dice6b;
     QPixmap background;
-    QPushButton* dicePB[5];
     QPixmap pixmaps[13];
+    QList<QTableWidget*> tables;
     int lastRowClicked = 0;
     int lastColumnClicked = 0;
     YahtzeeGame* m_pYahtzeeGame;
+    std::vector<std::pair<QString,int>> topTen;
+    char initial = 'A';
+    QString entryInitials;
 };
 #endif // YahtzeeUI_H

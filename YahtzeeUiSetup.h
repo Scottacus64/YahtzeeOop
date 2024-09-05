@@ -4,15 +4,22 @@
 
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QFrame>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QTableWidget>
-#include <QtWidgets/QWidget>
+#include <QApplication>
+#include <QFrame>
+#include <QWidget>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QPushButton>
+#include <QTableWidget>
+#include <QDir>
+#include <QLabel>
+#include <QWidget>
+#include <QString>
 #include <vector>
 #include <string>
+#include <QFont>
+#include <QFontDatabase>
+
 
 QT_BEGIN_NAMESPACE
 
@@ -21,149 +28,185 @@ class YahtzeeUiSetup
 public:
     QPushButton* m_dieButton[5];
     QPushButton* m_rollButton;
-    QWidget *layoutWidget;
-    QHBoxLayout *horizontalLayout;
-    QTableWidget* m_tableWidget;
+    QPushButton* m_rightArrow;
+    QPushButton* m_leftArrow;
+    QPushButton* m_enter;
+    QTableWidget* m_tableUpper;
+    QTableWidget* m_tableUpperTotal;
+    QTableWidget* m_tableLower;
+    QTableWidget* m_tableTotal;
     QTableWidgetItem* m_cell[22][4];
-    QFrame *line;
-    QFrame *line_2;
-    QTableWidget* m_tableWidgetTotal;
+    QString assetPath;
+    QLabel* m_cup;
+    QLabel* m_pad;
+    QLabel* m_topTen;
+    QLabel* m_letter;
+    QLabel* m_initials;
     
 
     void setupUi(QWidget *YahtzeeUI)
     {
         if (YahtzeeUI->objectName().isEmpty())
             YahtzeeUI->setObjectName("Yahtzee");
-        YahtzeeUI->resize(648, 878);
+        YahtzeeUI->resize(750, 1000);
 
-        layoutWidget = new QWidget(YahtzeeUI);
-        layoutWidget->setObjectName("layoutWidget");
-        layoutWidget->setGeometry(QRect(40, 10, 558, 112));
-        horizontalLayout = new QHBoxLayout(layoutWidget);
-        horizontalLayout->setObjectName("horizontalLayout");
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-    
-        QIcon icon;
-        icon.addFile(QString::fromUtf8("../../VSC/CPP/Dice/resources/dice0.png"), QSize(), QIcon::Normal, QIcon::Off);
+        QString appDir = QCoreApplication::applicationDirPath();
+        assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
 
-        std::string button = "DieButton_";
+        m_cup = new QLabel(YahtzeeUI);
+        m_cup->setGeometry(QRect(0,0,180,200));
+        QPixmap cupPix = QPixmap(QString(assetPath + "cup.png"));
+        m_cup->resize(180, 200);
+        QPixmap scaledCup = cupPix.scaled(m_cup->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        m_cup->setPixmap(scaledCup);
 
+        m_pad = new QLabel(YahtzeeUI);
+        m_pad->setGeometry(QRect(25,230,770,780));
+        QPixmap padPix = QPixmap(QString(assetPath + "background.png"));
+        QPixmap scaledPad = padPix.scaled(m_pad->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        m_pad->setPixmap(scaledPad);
+        
+
+        m_topTen = new QLabel(YahtzeeUI);
+        m_topTen->setGeometry(QRect(100,240,450,400));
+
+        m_initials = new QLabel(YahtzeeUI);
+        m_initials->setGeometry(QRect(275,650,100,75));
+        QFont iFont = m_initials->font();
+        iFont.setPointSize(42);
+        m_initials->setFont(iFont);
+
+        m_letter = new QLabel(YahtzeeUI);
+        m_letter->setGeometry(QRect(300,700,75,75));
+        QFont lFont = m_letter->font();
+        lFont.setPointSize(42);
+        m_letter->setFont(lFont);
+
+        m_leftArrow = new QPushButton(YahtzeeUI);
+        m_leftArrow->setGeometry(QRect(150,775,100,100));
+        m_leftArrow->setObjectName("leftArrow");
+        m_leftArrow->setStyleSheet(QString::fromUtf8("border: none"));
+        m_leftArrow->setEnabled(false);
+        m_leftArrow->setVisible(false);
+
+        m_rightArrow = new QPushButton(YahtzeeUI);
+        m_rightArrow->setGeometry(QRect (400,775,100,100));
+        m_rightArrow->setObjectName("rightArrow");
+        m_rightArrow->setStyleSheet(QString::fromUtf8("border: none"));
+        m_rightArrow->setEnabled(false);
+        m_rightArrow->setVisible(false);
+
+        m_enter = new QPushButton(YahtzeeUI);
+        m_enter->setGeometry(QRect(275,775,100,100));
+        m_enter->setObjectName("enter");
+        m_enter->setStyleSheet(QString::fromUtf8("border: none"));
+        m_enter->setEnabled(false);
+        m_enter->setVisible(false);
+        
         for(int i=0; i<5; i++)
         {
-            std::string buttonName = button + std::to_string(i);
+            std::string buttonName = "DieButton_" + std::to_string(i);
             m_dieButton[i] = new QPushButton(YahtzeeUI);
             m_dieButton[i]->setObjectName(QString::fromStdString(buttonName));
-            m_dieButton[i]->setGeometry(QRect(20+(i*100), 40, 100, 100));
+            m_dieButton[i]->setGeometry(QRect(190+(i*100), 90, 100, 100));
             m_dieButton[i]->setStyleSheet(QString::fromUtf8("border: none"));
-            m_dieButton[i]->setIcon(icon);
             m_dieButton[i]->setIconSize(QSize(100, 100));
             m_dieButton[i]->setCheckable(false);
             m_dieButton[i]->setEnabled(false);
-            horizontalLayout->addWidget(m_dieButton[i]);
         }
 
-        m_rollButton = new QPushButton("Roll", YahtzeeUI);
+        m_rollButton = new QPushButton(YahtzeeUI);
         m_rollButton->setObjectName("rollButton");
-        m_rollButton->setGeometry(QRect(270, 110, 100, 50));
+        m_rollButton->setGeometry(QRect(300, 190, 200, 60));
+        m_rollButton->setStyleSheet("QPushButton { background-color: transparent; border: none; }");
+        m_rollButton->setIconSize(QSize(200, 60));
+        QIcon rollButton = QPixmap(QString(assetPath + "newGame.png"));
+        m_rollButton->setIcon(rollButton);
+
+        m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 293, 270, 170));
+        m_tableUpperTotal = createTableWidget(YahtzeeUI, 3, 3, QRect(413, 465, 270, 86));
+        m_tableLower = createTableWidget(YahtzeeUI, 3, 10, QRect(413, 579, 270, 285));
+        m_tableTotal = createTableWidget(YahtzeeUI, 3, 2, QRect(413, 905, 270, 78));
+
+        QMetaObject::connectSlotsByName(YahtzeeUI);
+    } 
+
+    QTableWidget* createTableWidget(QWidget* parent, int columns, int rows, const QRect& geometry) 
+    {
+        int tableFontId = QFontDatabase::addApplicationFont(assetPath + "Cookbook.ttf");
+        QString tableFontFamily;
+        tableFontFamily = QFontDatabase::applicationFontFamilies(tableFontId).at(0);
+        QFont tableFont(tableFontFamily);
+        tableFont.setPointSize(21);
+
+        QTableWidget* table = new QTableWidget(parent);
+        table->setFont(tableFont); 
+        table->setColumnCount(columns);
+        table->setRowCount(rows);
+        table->setGeometry(geometry);
+        table->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        table->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        table->horizontalHeader()->setVisible(false);
+        table->horizontalHeader()->setHighlightSections(false);
+        table->verticalHeader()->setVisible(false);
+        table->verticalHeader()->setHighlightSections(false);
+        table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+        //table->setStyleSheet("QTableWidget::item { background-color: transparent; border: none; }");
+        table->setStyleSheet(
+            "QTableWidget { "
+            "    background-color: transparent; "
+            "    border: none; "
+            "} "
+            "QHeaderView::section { "
+            "    background-color: transparent; "
+            "    border: none; "
+            "} "
+            "QTableWidget::item { "
+            "    border: none; "
+            "}"
+        );
         
-        m_tableWidget = new QTableWidget(YahtzeeUI);
-        m_tableWidget->setColumnCount(4);
-        m_tableWidget->setRowCount(22);
-        m_tableWidget->setObjectName("tableWidget");
-        m_tableWidget->setGeometry(QRect(90, 160, 451, 661));
-        m_tableWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_tableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_tableWidget->setRowCount(22);
-        m_tableWidget->setColumnCount(4);
-        m_tableWidget->horizontalHeader()->setVisible(false);
-        m_tableWidget->horizontalHeader()->setHighlightSections(false);
-        m_tableWidget->verticalHeader()->setVisible(false);
-        m_tableWidget->verticalHeader()->setHighlightSections(false);
+        if(rows<6){table->setEnabled(false);}
 
-        std::vector<QString> names = {"x1", "x2", "x3", "Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "Top Subtotal",
-        "Bonus", "Top Total", "LOWER SECTION", "Three of a Kind", "Four of a Kind", "Full House", "Small Straight", "Large Straight",
-        "Yahtzee", "Chance", "Yahtzee Bonus", "Lower Total", "Grand Total", "Final Score"};
+        for (int i = 0; i < columns; i++) {
+            table->setColumnWidth(i, 270 / 3);
+        }
 
-        for(int i=0; i<22; i++)
-        {
-            for(int j=0; j<4; j++)
-            {
-                m_cell[i][j] = new QTableWidgetItem();
-                QColor transparentColor;
-                if(i==0 && j>0)
-                {
-                    m_cell[i][j]->setText(names[j-1]);
+        for (int i = 0; i < rows; i++) {
+            if(rows < 3) {
+                if(i==0){
+                    table->setRowHeight(i, 34);
                 }
-                if(i>0 && i<22 && j==0)
-                {
-                    m_cell[i][j]->setText(names[i+2]);
+                else {
+                    table->setRowHeight(i, 40);
                 }
-                if(i==0 || (i>6 && i<11) || i>17 || j==0)
-                {
-                    m_cell[i][j]->setFlags(m_cell[i][j]->flags() & ~Qt::ItemIsSelectable & ~Qt::ItemIsEnabled);     // non-clickable
-                    m_cell[i][j]->setForeground(QBrush(QColor(Qt::black)));   // makes text not be greyed out even though non-clickable
+            }
+            else {
+                table->setRowHeight(i, 28);
+            }
+            
+
+            for (int j = 0; j < columns; j++) {
+                QTableWidgetItem* item = new QTableWidgetItem();
+                item->setBackground(Qt::transparent);
+                item->setTextAlignment(Qt::AlignCenter);
+                if(rows < 3) {
+                    QFont itemFont = item->font();
+                    if(i==0){
+                        itemFont.setPointSize(28);
+                        item->setFont(itemFont);
+                    }
+                    else {
+                        itemFont.setPointSize(34);
+                        item->setFont(itemFont);
+                    }
                 }
-                if(j==0)
-                {
-                    transparentColor = QColor(255, 239, 219, 127); 
-                }
-                if(j==1)
-                {
-                    transparentColor = QColor(210, 180, 140, 127);  
-                }
-                if(j==2)
-                {
-                    transparentColor =  QColor(198, 150, 94, 127);  
-                }
-                if(j==3)
-                {  
-                    transparentColor =  QColor(184, 134, 11, 127);   
-                }
-                m_cell[i][j]->setBackground(transparentColor);
-                m_tableWidget->setItem(i, j, m_cell[i][j]);     // this makes the m_cell a part of m_tableWidget
+                table->setItem(i, j, item);
             }
         }
 
-        
-
-        m_tableWidgetTotal = new QTableWidget(YahtzeeUI);
-        if (m_tableWidgetTotal->columnCount() < 2)
-            m_tableWidgetTotal->setColumnCount(2);
-        if (m_tableWidgetTotal->rowCount() < 1)
-            m_tableWidgetTotal->setRowCount(1);
-
-        line = new QFrame(YahtzeeUI);
-        //line->setObjectName("line");
-        line->setGeometry(QRect(90, 450, 451, 20));
-        line->setFrameShape(QFrame::HLine);
-        line->setFrameShadow(QFrame::Sunken);
-        line_2 = new QFrame(YahtzeeUI);
-        //line_2->setObjectName("line_2");
-        line_2->setGeometry(QRect(90, 480, 451, 20));
-        line_2->setFrameShape(QFrame::HLine);
-        line_2->setFrameShadow(QFrame::Sunken);
-
-        QFont font;
-        font.setPointSize(18);
-        QTableWidgetItem *grandTotal = new QTableWidgetItem();
-        grandTotal->setFlags(Qt::ItemIsEnabled);
-        m_tableWidgetTotal->setItem(0, 0, grandTotal);
-        m_tableWidgetTotal->setObjectName("m_tableWidgetTotal");
-        m_tableWidgetTotal->setGeometry(QRect(220, 830, 201, 31));
-        m_tableWidgetTotal->setFont(font);
-        m_tableWidgetTotal->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_tableWidgetTotal->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_tableWidgetTotal->setShowGrid(false);
-        m_tableWidgetTotal->setRowCount(1);
-        m_tableWidgetTotal->setColumnCount(2);
-        m_tableWidgetTotal->horizontalHeader()->setVisible(false);
-        m_tableWidgetTotal->horizontalHeader()->setHighlightSections(false);
-        m_tableWidgetTotal->verticalHeader()->setVisible(false);
-        m_tableWidgetTotal->verticalHeader()->setHighlightSections(false);
-
-        QMetaObject::connectSlotsByName(YahtzeeUI);
-    } // setupUi
-
+        return table;
+    }
 
 };
 

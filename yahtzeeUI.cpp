@@ -4,6 +4,10 @@
 #include <QTimer>
 #include <QPainter>
 #include <QDir>
+#include <utility>
+#include <string>
+#include <vector>
+
 
 YahtzeeUI::YahtzeeUI(QWidget *parent)
     : QWidget(parent), ui(new Ui::YahtzeeUI)
@@ -12,28 +16,36 @@ YahtzeeUI::YahtzeeUI(QWidget *parent)
 
     QString appDir = QCoreApplication::applicationDirPath();
     QString assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
+    background = QPixmap(QString(assetPath + "felt.png"));
 
     for(int i=0; i<13; i++)
     {
         QString pathway = assetPath + "dice" + QString::number(i) + ".png";
-        std::cout << pathway.toStdString() << std::endl;
         pixmaps[i] = QPixmap(pathway);
     }
 
-    background = QPixmap(QString(assetPath + "green.png"));
-   
-    for(int i=0; i<5; i++)
-    {
-        dicePB[i] = ui->m_dieButton[i];
-    }
-
-    for (int i=0; i<5; i++) {dicePB[i]->setIcon(pixmaps[0]);}
+    for (int i=0; i<5; i++) {ui->m_dieButton[i]->setIcon(pixmaps[0]);}
     int lastRowClicked = 0;
     int lastColumnClicked = 0;
-    ui->m_tableWidget->setColumnWidth(0, 150);   
-    ui->m_tableWidget->setEnabled(false);
     std::cout << "Asset Path" << assetPath.toStdString() << std::endl;
+
+
+    QIcon leftIcon = QPixmap(QString(assetPath + "LeftArrow.png"));
+    ui->m_leftArrow->setIcon(leftIcon);
+    QIcon rightIcon = QPixmap(QString(assetPath + "RightArrow.png"));
+    ui->m_leftArrow->setIconSize(ui->m_leftArrow->size());
+    ui->m_rightArrow->setIcon(rightIcon);
+    ui->m_rightArrow->setIconSize(ui->m_rightArrow->size());
+    QIcon enterIcon = QPixmap(QString(assetPath + "EnterButton.png"));
+    ui->m_enter->setIcon(enterIcon);
+    ui->m_enter->setIconSize(ui->m_enter->size());
     m_pYahtzeeGame = new YahtzeeGame();
+    QList<QTableWidget*> tables = {
+        ui->m_tableUpper,
+        ui->m_tableUpperTotal,
+        ui->m_tableLower,
+        ui->m_tableTotal
+    };
 }
 
 
@@ -52,34 +64,40 @@ void YahtzeeUI::paintEvent(QPaintEvent *event) {
 void YahtzeeUI::on_rollButton_clicked()
 {
     bool gameOver = m_pYahtzeeGame->checkGameOver();
+    QString appDir = QCoreApplication::applicationDirPath();
+    QString assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
     if (gameOver == true)
     {
-        ui->m_tableWidgetTotal->setItem(0,1,nullptr);
-        ui->m_rollButton->setText("Roll");
+        //ui->m_tableWidgetTotal->setItem(0,1,nullptr);
         m_pYahtzeeGame-> clearPad();
+        m_pYahtzeeGame->clearHighScore();
+
+        for (QTableWidget* table : tables) {
+            table->setVisible(true);
+            table->setEnabled(true);
+            table->clearFocus();
+            table->setCurrentItem(nullptr);
+            table->setCurrentCell(-1, -1);
+            table->clearSelection();
+        }
+
+        ui->m_topTen->setVisible(false);
+        ui->m_leftArrow->setVisible(false);
+        ui->m_rightArrow->setVisible(false);
+        ui->m_enter->setVisible(false);
+        ui->m_initials->setVisible(false);
+        ui->m_letter->setVisible(false);
         refreshTable();
     }
-    else
-    {
-        m_pYahtzeeGame->newGame();
-    }
-    
+
     for(int i=0; i<6; i++)
     {
         ui->m_dieButton[i]->setEnabled(true);
     }
-    ui->m_tableWidget->setEnabled(true);
+
     lastRowClicked = 0;
     lastColumnClicked = 0;
     int rolls = m_pYahtzeeGame->getRolls();
-
-    // Clear focus from the table widget
-    ui->m_tableWidget->clearFocus();
-    ui->m_tableWidget->setCurrentItem(nullptr);
-
-    // Deselect all cells
-    ui->m_tableWidget->setCurrentCell(-1, -1);
-    ui->m_tableWidget->clearSelection();
 
     if (rolls == 0)
     {
@@ -93,21 +111,21 @@ void YahtzeeUI::on_rollButton_clicked()
     rolls +=1;
     m_pYahtzeeGame->setRolls(rolls);
 
-    switch(rolls)
-    {
+ switch(rolls)
+{
     case 0:
-        ui->m_rollButton->setText("Roll");
+        ui->m_rollButton->setIcon(QIcon(QPixmap(assetPath + "rollDice.png")));
         break;        
     case 1:
-        ui->m_rollButton->setText("2 Rolls Left");
+        ui->m_rollButton->setIcon(QIcon(QPixmap(assetPath + "twoRollsLeft.png")));
         break;
     case 2:
-        ui->m_rollButton->setText("1 Roll Left");
+        ui->m_rollButton->setIcon(QIcon(QPixmap(assetPath + "oneRollLeft.png")));
         break;
     default:
-        ui->m_rollButton->setText("Click Below");
+        ui->m_rollButton->setIcon(QIcon(QPixmap(assetPath + "enterRoll.png")));
         break;
-    }
+}
 
     if (rolls < 4)
     {
@@ -174,11 +192,11 @@ void YahtzeeUI::setDiePixmap(int slot)
     
     if (clicked == false)
     {
-        dicePB[slot]->setIcon(QIcon(pixmaps[value]));
+        ui->m_dieButton[slot]->setIcon(QIcon(pixmaps[value]));
     }
     else
     {
-        dicePB[slot]->setIcon(QIcon(pixmaps[value+6]));
+        ui->m_dieButton[slot]->setIcon(QIcon(pixmaps[value+6]));
     }
 }
 
@@ -194,7 +212,15 @@ void YahtzeeUI::on_tableWidget_cellClicked(int row, int col)
         m_pYahtzeeGame->enterScore(row, col);
         refreshTable();
         done = m_pYahtzeeGame->checkGameOver();
-        if (done == true) {ui->m_rollButton->setText("New Game?");}
+        if (done == true) 
+        {
+            ui->m_rollButton->setText("New Game?");
+            int total = m_pYahtzeeGame->getGrandTotal();
+            topTen = m_pYahtzeeGame->checkTopTen(total);
+            for (int i=0; i<5; i++) {ui->m_dieButton[i]->setIcon(pixmaps[0]);}
+            //ui->m_tableWidget->setVisible(false);
+            if(m_pYahtzeeGame->highScore() == true){getInitials();}
+        }
     }
 }
 
@@ -209,20 +235,80 @@ void YahtzeeUI::refreshTable()
             std::cout << "value = " << value << " " << row << col <<std::endl;
             if (value < 10000)
             {
-                QTableWidgetItem* pItem = ui->m_tableWidget->item(row+1, col+1);
-                pItem->setText(QString::number(value));
+                //QTableWidgetItem* pItem = ui->m_tableWidget->item(row+1, col);
+                //pItem->setText(QString::number(value));
                 //ui->m_tableWidget->setItem(row+1, col+1, pItem);
             }
             else
             {
-                QTableWidgetItem* pItem = ui->m_tableWidget->item(row+1, col+1);
-                pItem->setText(QString());
+                //QTableWidgetItem* pItem = ui->m_tableWidget->item(row+1, col);
+                //pItem->setText(QString());
             }
         }
     }
     std::cout << "\n" << std::endl;
     
-    QTableWidgetItem *item6 = new QTableWidgetItem(QString::number(m_pYahtzeeGame->getGrandTotal()));
-    ui->m_tableWidgetTotal->setItem(0, 1, item6);
+    //QTableWidgetItem *item6 = new QTableWidgetItem(QString::number(m_pYahtzeeGame->getGrandTotal()));
+    //ui->m_tableWidgetTotal->setItem(0, 1, item6);
+}
+
+
+void YahtzeeUI::on_leftArrow_clicked()
+{
+    std::cout << "Left Arrow Clicked" << std::endl;
+    initial --;
+    if (initial < 'A') {initial = 'Z';}
+    ui->m_letter->setText(QString(QChar(initial)));
+}
+
+
+void YahtzeeUI::on_rightArrow_clicked()
+{
+    initial ++;
+    if(initial > 'Z'){initial = 'A';}
+    ui->m_letter->setText(QString(QChar(initial)));
+}
+
+
+void YahtzeeUI::on_enter_clicked()
+{
+    std::cout << "length = " << entryInitials.length() << std::endl;
+    if(entryInitials.length() < 3)
+    {
+        entryInitials = entryInitials + QString(QChar(initial));
+        ui->m_initials->setText(entryInitials);
+    }
+}
+
+
+void YahtzeeUI::getInitials()
+{
+    for (int i=0; i<5; i++) {ui->m_dieButton[i]->setIcon(pixmaps[0]);}
+    ui->m_rollButton->setVisible(false);
+    ui->m_topTen->setVisible(true);
+    ui->m_leftArrow->setVisible(true);
+    ui->m_rightArrow->setVisible(true);
+    ui->m_enter->setVisible(true);
+    ui->m_leftArrow->setEnabled(true);
+    ui->m_rightArrow->setEnabled(true);
+    ui->m_enter->setEnabled(true);
+    ui->m_initials->setVisible(true);
+    ui->m_letter->setVisible(true);
+    ui->m_letter->setText("A");
+
+
+
+}
+
+
+void YahtzeeUI::displayTopTen()
+{
+    // find the slot that the initials go into
+
+    // update the vector
+
+    // update the high score file
+
+    // display the top ten scores
 }
 

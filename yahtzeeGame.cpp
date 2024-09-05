@@ -1,5 +1,14 @@
 #include "YahtzeeGame.h"
 #include <iostream>
+#include <utility>
+#include <string>
+#include <vector>
+#include <QString>
+#include <QStandardPaths>
+#include <QVector>
+#include <QDir>
+#include <QFile>
+
 
 YahtzeeGame::YahtzeeGame()
 {
@@ -29,17 +38,12 @@ void YahtzeeGame::rollDice(int i)
     gameOver = false;
 }
 
+
 bool YahtzeeGame::checkGameOver()
 {
     return gameOver;
 }
 
-
-void YahtzeeGame::newGame()
-{
-    gameOver = false;
-    std::cout << "Game On!" << std::endl;
-}
 
 void YahtzeeGame::clearPad()
 {
@@ -52,6 +56,18 @@ void YahtzeeGame::clearPad()
     }
 }
 
+
+bool YahtzeeGame::highScore()
+{
+    return newHighScore;
+}
+
+void YahtzeeGame:: clearHighScore()
+{
+    newHighScore = false;
+}
+
+
 Dice* YahtzeeGame::getDiceArrayPtr(int slot)
 {
     return  &diceArray[slot];
@@ -63,10 +79,12 @@ int YahtzeeGame::getRolls()
     return rolls;
 }
 
+
 void YahtzeeGame::setRolls(int inputRolls)
 {
     rolls = inputRolls;
 }
+
 
 bool YahtzeeGame::enterScore(int row, int col) 
 {
@@ -131,6 +149,7 @@ bool YahtzeeGame::checkTopSection(int row, int col)
     return diceCanRoll;
 }
 
+
 bool YahtzeeGame::checkThreeOfaKind(int col)
 {
     int total = 0;
@@ -158,6 +177,7 @@ bool YahtzeeGame::checkThreeOfaKind(int col)
     lastEntry[1] = 10;
     return diceCanRoll;
 }
+
 
 bool YahtzeeGame::checkFourOfaKind(int col)
 {
@@ -187,6 +207,7 @@ bool YahtzeeGame::checkFourOfaKind(int col)
     return diceCanRoll;
 }
 
+
 bool YahtzeeGame::checkFullHouse(int col)
 {
     int total = 0;
@@ -210,6 +231,7 @@ bool YahtzeeGame::checkFullHouse(int col)
     lastEntry[1] = 12;
     return diceCanRoll;
 }
+
 
 bool YahtzeeGame::checkSmallStraight(int col)
 {
@@ -242,6 +264,7 @@ bool YahtzeeGame::checkSmallStraight(int col)
     return diceCanRoll;
 }
 
+
 bool YahtzeeGame::checkLargeStraight(int col)
 {
     int* values = bubbleSort();
@@ -263,6 +286,7 @@ bool YahtzeeGame::checkLargeStraight(int col)
     lastEntry[1] = 14;
     return diceCanRoll;
 }
+
 
 bool YahtzeeGame::checkYahtzee(int col)
 {
@@ -289,6 +313,7 @@ bool YahtzeeGame::checkYahtzee(int col)
     yahtzeeCheck = false;                   // reset yahtzee check here as a central place that all bounus' go through
     return yahtzee;
 }
+
 
 void YahtzeeGame::checkYahtzeeBonus(int col)
 {
@@ -322,6 +347,7 @@ void YahtzeeGame::checkYahtzeeBonus(int col)
     }
 }
 
+
 bool YahtzeeGame::checkChance(int col)
 {
     int total = 0;
@@ -345,10 +371,12 @@ bool YahtzeeGame::checkChance(int col)
     return diceCanRoll;
 }
 
+
 int YahtzeeGame::getYahtzeePad(int row, int col)
 {
     return yahtzeePad[col][row];
 }
+
 
 bool YahtzeeGame::checkTopFill()
 {
@@ -367,6 +395,7 @@ bool YahtzeeGame::checkTopFill()
     }
     return topFill;
 }
+
 
 int* YahtzeeGame::bubbleSort()
 {
@@ -392,6 +421,7 @@ int* YahtzeeGame::bubbleSort()
     return pValues;
 }
 
+
 int* YahtzeeGame::bubbleSort2(int* values)
 {
     int j = 4;
@@ -411,6 +441,7 @@ int* YahtzeeGame::bubbleSort2(int* values)
 
     return values;   
 }
+
 
 void YahtzeeGame::totalUp()
 {
@@ -454,7 +485,75 @@ void YahtzeeGame::totalUp()
     if (cellsFilled > 38) {gameOver = true;}
 }
 
+
 int YahtzeeGame::getGrandTotal()
 {
     return grandTotal;
 }
+
+
+std::vector<std::pair<QString, int>> YahtzeeGame::checkTopTen(int currentScore)
+{
+    std::vector<std::pair<QString,int>> topTenVec(10);
+    QString configDir = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    QString fileContent;
+    if (!configDir.endsWith("Yahtzee")) 
+    {
+        configDir += QString(QDir::separator()) + "Yahtzee";
+    }
+    QDir().mkpath(configDir);
+    QString filePath = configDir + QString(QDir::separator()) + "topTen.txt";
+    QFile file(filePath);
+
+    // if there is no file create a default file
+    if (!file.exists()) 
+    {
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream out(&file);
+            out << "ABC 2000 BCD 1800 CDE 1700 DEF 1600 EFG 1500 FGH 1400 GHI 1300 HIJ 1200 IJK 1100 JKH 1000" ;
+            file.close();
+        } else {
+            qWarning() << "Failed to create file" << filePath;
+        }
+    }
+
+    // load the data
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        fileContent = in.readAll().trimmed();
+        file.close(); 
+        qDebug() << "File content:" << fileContent; 
+    } else {
+        qWarning() << "Failed to open file" << filePath; 
+    }
+
+    // form a QString with spaces between entries
+    QStringList stringList = fileContent.split(' ', Qt::SkipEmptyParts);
+
+    // make pairs of each two entries
+    for(int i=0; i<10; i++)
+    {
+        QString initials = stringList.at(i*2);
+        int value = stringList.at((i*2)+1).toInt();
+        std::pair<QString, int> pair = std::make_pair(initials, value);
+        topTenVec[i] = pair;
+    }
+
+    // check to see if the current score is in the top 10, if so add it with "999" as the initials
+    for(int i=0; i<10; i++)
+    {
+        int value = topTenVec[i].second;
+        if(currentScore > value)
+        {
+            topTenVec.pop_back();
+            std::pair<QString, int> newPair = std::make_pair("999", currentScore);
+            topTenVec.insert(topTenVec.begin()+i, newPair);
+            newHighScore = true;
+            break;
+        }
+    }
+
+    return topTenVec;
+}
+
+
