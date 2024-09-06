@@ -125,7 +125,7 @@ public:
 
         m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 293, 270, 170));
         m_tableUpperTotal = createTableWidget(YahtzeeUI, 3, 3, QRect(413, 465, 270, 86));
-        m_tableLower = createTableWidget(YahtzeeUI, 3, 10, QRect(413, 579, 270, 285));
+        m_tableLower = createTableWidget(YahtzeeUI, 3, 11, QRect(413, 579, 270, 285));
         m_tableTotal = createTableWidget(YahtzeeUI, 3, 2, QRect(413, 905, 270, 78));
 
         QMetaObject::connectSlotsByName(YahtzeeUI);
@@ -141,6 +141,8 @@ public:
 
         QTableWidget* table = new QTableWidget(parent);
         table->setFont(tableFont); 
+        if(rows==6){table->setObjectName("tableUpper");}
+        if(rows==11){table->setObjectName("tableLower");}
         table->setColumnCount(columns);
         table->setRowCount(rows);
         table->setGeometry(geometry);
@@ -151,7 +153,6 @@ public:
         table->verticalHeader()->setVisible(false);
         table->verticalHeader()->setHighlightSections(false);
         table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-        //table->setStyleSheet("QTableWidget::item { background-color: transparent; border: none; }");
         table->setStyleSheet(
             "QTableWidget { "
             "    background-color: transparent; "
@@ -164,7 +165,15 @@ public:
             "QTableWidget::item { "
             "    border: none; "
             "}"
+            "QTableWidget { "
+            "    color: black; "  // Set the text color to black
+            "} "
+            "QTableWidget::item:disabled { "
+            "    color: black; "  // Override the disabled item color
+            "}"
         );
+
+
         
         if(rows<6){table->setEnabled(false);}
 
@@ -204,7 +213,6 @@ public:
                 table->setItem(i, j, item);
             }
         }
-
         return table;
     }
 

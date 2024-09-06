@@ -29,7 +29,8 @@ private slots:
     void on_DieButton_2_clicked();
     void on_DieButton_3_clicked();
     void on_DieButton_4_clicked();
-    void on_tableWidget_cellClicked(int row, int column);
+    void on_tableUpper_cellClicked(int row, int col); 
+    void on_tableLower_cellClicked(int row, int col); 
     void on_leftArrow_clicked();
     void on_rightArrow_clicked();
     void on_enter_clicked();
@@ -58,5 +59,6 @@ private:
     std::vector<std::pair<QString,int>> topTen;
     char initial = 'A';
     QString entryInitials;
+    QString assetPath;
 };
 #endif // YahtzeeUI_H

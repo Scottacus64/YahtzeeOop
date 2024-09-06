@@ -15,7 +15,7 @@ YahtzeeUI::YahtzeeUI(QWidget *parent)
     ui->setupUi(this);
 
     QString appDir = QCoreApplication::applicationDirPath();
-    QString assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
+    assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
     background = QPixmap(QString(assetPath + "felt.png"));
 
     for(int i=0; i<13; i++)
@@ -201,24 +201,52 @@ void YahtzeeUI::setDiePixmap(int slot)
 }
 
 
-void YahtzeeUI::on_tableWidget_cellClicked(int row, int col)
+void YahtzeeUI::on_tableUpper_cellClicked(int row, int col)
 {
     bool gameOver = m_pYahtzeeGame->checkGameOver();
     if (gameOver == false)
     {
         m_pYahtzeeGame->setRolls(0);
-        ui->m_rollButton->setText("Roll");
+        ui->m_rollButton->setIcon(QIcon(QPixmap(assetPath + "rollDice.png")));
         bool done = false;
         m_pYahtzeeGame->enterScore(row, col);
         refreshTable();
+        ui->m_tableUpper->clearSelection();
         done = m_pYahtzeeGame->checkGameOver();
         if (done == true) 
         {
-            ui->m_rollButton->setText("New Game?");
+            ui->m_rollButton->setIcon(QIcon(QPixmap(assetPath + "newGame.png")));
             int total = m_pYahtzeeGame->getGrandTotal();
             topTen = m_pYahtzeeGame->checkTopTen(total);
             for (int i=0; i<5; i++) {ui->m_dieButton[i]->setIcon(pixmaps[0]);}
-            //ui->m_tableWidget->setVisible(false);
+            for (QTableWidget* table : tables) {
+                table->setVisible(false);}
+            if(m_pYahtzeeGame->highScore() == true){getInitials();}
+        }
+    }
+}
+
+void YahtzeeUI::on_tableLower_cellClicked(int row, int col)
+{
+    std::cout << row << ":" << col << std::endl;
+    bool gameOver = m_pYahtzeeGame->checkGameOver();
+    if (gameOver == false)
+    {
+        m_pYahtzeeGame->setRolls(0);
+        ui->m_rollButton->setIcon(QIcon(QPixmap(assetPath + "rollDice.png")));
+        bool done = false;
+        m_pYahtzeeGame->enterScore(row+9, col);
+        refreshTable();
+        ui->m_tableLower->clearSelection();
+        done = m_pYahtzeeGame->checkGameOver();
+        if (done == true) 
+        {
+            ui->m_rollButton->setIcon(QIcon(QPixmap(assetPath + "newGame.png")));
+            int total = m_pYahtzeeGame->getGrandTotal();
+            topTen = m_pYahtzeeGame->checkTopTen(total);
+            for (int i=0; i<5; i++) {ui->m_dieButton[i]->setIcon(pixmaps[0]);}
+            for (QTableWidget* table : tables) {
+                table->setVisible(false);}
             if(m_pYahtzeeGame->highScore() == true){getInitials();}
         }
     }
@@ -227,29 +255,57 @@ void YahtzeeUI::on_tableWidget_cellClicked(int row, int col)
 
 void YahtzeeUI::refreshTable()
 {
-    for (int row = 0; row < 21; row++)
+    for (int row = 0; row < 22; row++)
     {
         for (int col = 0; col < 3; col++)
         {
             int value = m_pYahtzeeGame->getYahtzeePad(row, col);
-            std::cout << "value = " << value << " " << row << col <<std::endl;
+            std::cout << "value = " << value << " " << row << ":"  << col <<std::endl;
             if (value < 10000)
             {
-                //QTableWidgetItem* pItem = ui->m_tableWidget->item(row+1, col);
-                //pItem->setText(QString::number(value));
-                //ui->m_tableWidget->setItem(row+1, col+1, pItem);
+                if(row<6){
+                    QTableWidgetItem* pItem = ui->m_tableUpper->item(row, col);
+                    pItem->setText(QString::number(value));
+                }
+                if(row>5 && row<9){
+                    QTableWidgetItem* pItem = ui->m_tableUpperTotal->item(row-6, col);
+                    pItem->setText(QString::number(value));
+                }
+                if(row>8 && row<20){
+                    QTableWidgetItem* pItem = ui->m_tableLower->item(row-9, col);
+                    pItem->setText(QString::number(value));
+                }
+                if(row>19){
+                    QTableWidgetItem* pItem = ui->m_tableTotal->item(row-20, col);
+                    pItem->setText(QString::number(value));
+                }
             }
             else
             {
-                //QTableWidgetItem* pItem = ui->m_tableWidget->item(row+1, col);
-                //pItem->setText(QString());
+                if(row<6){
+                    QTableWidgetItem* pItem = ui->m_tableUpper->item(row, col);
+                    pItem->setText(QString());
+                }
+                if(row>5 && row<9){
+                    QTableWidgetItem* pItem = ui->m_tableUpperTotal->item(row-6, col);
+                    pItem->setText(QString());
+                }
+                if(row>8 && row<20){
+                    QTableWidgetItem* pItem = ui->m_tableLower->item(row-9, col);
+                    pItem->setText(QString());
+                }
+                if(row>19){
+                    QTableWidgetItem* pItem = ui->m_tableTotal->item(row-20, col);
+                    pItem->setText(QString());
+                }
             }
         }
     }
-    std::cout << "\n" << std::endl;
     
-    //QTableWidgetItem *item6 = new QTableWidgetItem(QString::number(m_pYahtzeeGame->getGrandTotal()));
-    //ui->m_tableWidgetTotal->setItem(0, 1, item6);
+    QTableWidgetItem* pItem = ui->m_tableTotal->item(1,1);
+    int gt = m_pYahtzeeGame->getGrandTotal();
+    std::cout << gt << "\n" << std::endl;
+    pItem->setText(QString::number(gt));
 }
 
 

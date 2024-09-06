@@ -38,7 +38,7 @@ class YahtzeeGame
 
     private:
         int  rolls;
-        int  yahtzeePad[3][21];
+        int  yahtzeePad[3][22];
         bool gameOver;
         bool diceCanRoll;
         int  lastEntry[2];
