@@ -35,13 +35,14 @@ public:
     QTableWidget* m_tableUpperTotal;
     QTableWidget* m_tableLower;
     QTableWidget* m_tableTotal;
-    QTableWidgetItem* m_cell[22][4];
+    QTableWidget* m_tableTopTen;
     QString assetPath;
     QLabel* m_cup;
     QLabel* m_pad;
     QLabel* m_topTen;
     QLabel* m_letter;
     QLabel* m_initials;
+
     
 
     void setupUi(QWidget *YahtzeeUI)
@@ -49,6 +50,7 @@ public:
         if (YahtzeeUI->objectName().isEmpty())
             YahtzeeUI->setObjectName("Yahtzee");
         YahtzeeUI->resize(750, 1000);
+        YahtzeeUI->move(500,0);
 
         QString appDir = QCoreApplication::applicationDirPath();
         assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
@@ -68,36 +70,39 @@ public:
         
 
         m_topTen = new QLabel(YahtzeeUI);
-        m_topTen->setGeometry(QRect(100,240,450,400));
+        m_topTen->setGeometry(QRect(150,220,450,550));
+        m_topTen->setStyleSheet("QLabel { background-color: white; color: black; font-size: 32px; text-align: center; }");
+        m_topTen->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        m_topTen->setVisible(false);
 
         m_initials = new QLabel(YahtzeeUI);
-        m_initials->setGeometry(QRect(275,650,100,75));
-        QFont iFont = m_initials->font();
-        iFont.setPointSize(42);
-        m_initials->setFont(iFont);
+        m_initials->setGeometry(QRect(325,800,100,75));
+        m_initials->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        m_initials->setStyleSheet("QLabel { background-color: white; color: black; font-size: 42px; text-align: center; }");
+        m_initials->setText("_ _ _");
+        m_initials->setVisible(false);
 
         m_letter = new QLabel(YahtzeeUI);
-        m_letter->setGeometry(QRect(300,700,75,75));
-        QFont lFont = m_letter->font();
-        lFont.setPointSize(42);
-        m_letter->setFont(lFont);
+        m_letter->setGeometry(QRect(350,840,75,75));
+        m_letter->setStyleSheet("QLabel { color: white; font-size: 42px; text-align: center; }");
+        m_letter->setVisible(false);
 
         m_leftArrow = new QPushButton(YahtzeeUI);
-        m_leftArrow->setGeometry(QRect(150,775,100,100));
+        m_leftArrow->setGeometry(QRect(200,900,100,100));
         m_leftArrow->setObjectName("leftArrow");
         m_leftArrow->setStyleSheet(QString::fromUtf8("border: none"));
         m_leftArrow->setEnabled(false);
         m_leftArrow->setVisible(false);
 
         m_rightArrow = new QPushButton(YahtzeeUI);
-        m_rightArrow->setGeometry(QRect (400,775,100,100));
+        m_rightArrow->setGeometry(QRect (450,900,100,100));
         m_rightArrow->setObjectName("rightArrow");
         m_rightArrow->setStyleSheet(QString::fromUtf8("border: none"));
         m_rightArrow->setEnabled(false);
         m_rightArrow->setVisible(false);
 
         m_enter = new QPushButton(YahtzeeUI);
-        m_enter->setGeometry(QRect(275,775,100,100));
+        m_enter->setGeometry(QRect(325,900,100,100));
         m_enter->setObjectName("enter");
         m_enter->setStyleSheet(QString::fromUtf8("border: none"));
         m_enter->setEnabled(false);
@@ -123,15 +128,16 @@ public:
         QIcon rollButton = QPixmap(QString(assetPath + "newGame.png"));
         m_rollButton->setIcon(rollButton);
 
-        m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 293, 270, 170));
-        m_tableUpperTotal = createTableWidget(YahtzeeUI, 3, 3, QRect(413, 465, 270, 86));
-        m_tableLower = createTableWidget(YahtzeeUI, 3, 11, QRect(413, 579, 270, 285));
-        m_tableTotal = createTableWidget(YahtzeeUI, 3, 2, QRect(413, 905, 270, 78));
-
+        m_tableTopTen = createTableWidget(YahtzeeUI, 2, 10, QRect(225, 250, 300, 500), false);
+        m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 293, 270, 170), true);
+        m_tableUpperTotal = createTableWidget(YahtzeeUI, 3, 3, QRect(413, 465, 270, 86), true);
+        m_tableLower = createTableWidget(YahtzeeUI, 3, 11, QRect(413, 579, 270, 285), true);
+        m_tableTotal = createTableWidget(YahtzeeUI, 3, 2, QRect(413, 905, 270, 78), true);
+        
         QMetaObject::connectSlotsByName(YahtzeeUI);
     } 
 
-    QTableWidget* createTableWidget(QWidget* parent, int columns, int rows, const QRect& geometry) 
+    QTableWidget* createTableWidget(QWidget* parent, int columns, int rows, const QRect& geometry, bool scorePad) 
     {
         int tableFontId = QFontDatabase::addApplicationFont(assetPath + "Cookbook.ttf");
         QString tableFontFamily;
@@ -153,6 +159,7 @@ public:
         table->verticalHeader()->setVisible(false);
         table->verticalHeader()->setHighlightSections(false);
         table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+        table->setShowGrid(false);
         table->setStyleSheet(
             "QTableWidget { "
             "    background-color: transparent; "
@@ -166,51 +173,72 @@ public:
             "    border: none; "
             "}"
             "QTableWidget { "
-            "    color: black; "  // Set the text color to black
+            "    color: black; "  
             "} "
             "QTableWidget::item:disabled { "
-            "    color: black; "  // Override the disabled item color
+            "    color: black; "  
             "}"
         );
 
+        if(scorePad ==  true){
+            if(rows<6){table->setEnabled(false);}
 
-        
-        if(rows<6){table->setEnabled(false);}
-
-        for (int i = 0; i < columns; i++) {
-            table->setColumnWidth(i, 270 / 3);
-        }
-
-        for (int i = 0; i < rows; i++) {
-            if(rows < 3) {
-                if(i==0){
-                    table->setRowHeight(i, 34);
-                }
-                else {
-                    table->setRowHeight(i, 40);
-                }
+            for (int i = 0; i < columns; i++) {
+                table->setColumnWidth(i, 270 / 3);
             }
-            else {
-                table->setRowHeight(i, 28);
-            }
-            
 
-            for (int j = 0; j < columns; j++) {
-                QTableWidgetItem* item = new QTableWidgetItem();
-                item->setBackground(Qt::transparent);
-                item->setTextAlignment(Qt::AlignCenter);
+            for (int i = 0; i < rows; i++) {
                 if(rows < 3) {
-                    QFont itemFont = item->font();
                     if(i==0){
-                        itemFont.setPointSize(28);
-                        item->setFont(itemFont);
+                        table->setRowHeight(i, 34);
                     }
                     else {
-                        itemFont.setPointSize(34);
-                        item->setFont(itemFont);
+                        table->setRowHeight(i, 40);
                     }
                 }
-                table->setItem(i, j, item);
+                else {
+                    table->setRowHeight(i, 28);
+                }
+                
+
+                for (int j = 0; j < columns; j++) {
+                    QTableWidgetItem* item = new QTableWidgetItem();
+                    item->setBackground(Qt::transparent);
+                    item->setTextAlignment(Qt::AlignCenter);
+                    if(rows < 3) {
+                        QFont itemFont = item->font();
+                        if(i==0){
+                            itemFont.setPointSize(28);
+                            item->setFont(itemFont);
+                        }
+                        else {
+                            itemFont.setPointSize(34);
+                            item->setFont(itemFont);
+                        }
+                    }
+                    table->setItem(i, j, item);
+                }
+            }
+        }
+        else{
+            table->setEnabled(false);
+            for (int i = 0; i < columns; i++) {
+                table->setColumnWidth(i, 300/2);
+            }
+            for (int i=0;i<rows;i++){
+                table->setRowHeight(i, 500/10);
+            }
+            tableFont.setPointSize(42);
+            for(int i=0;i<10;i++){
+                for (int j = 0; j < columns; j++) {
+                        QTableWidgetItem* item = new QTableWidgetItem();
+                        item->setBackground(Qt::transparent);
+                        QFont itemFont = item->font();
+                        itemFont.setPointSize(42);
+                        item->setFont(itemFont);
+                        item->setTextAlignment(Qt::AlignCenter);
+                        table->setItem(i, j, item);
+                    }
             }
         }
         return table;

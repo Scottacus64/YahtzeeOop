@@ -496,6 +496,30 @@ int YahtzeeGame::getGrandTotal()
 }
 
 
+void YahtzeeGame::writeTopTen(QString output)
+{
+    std::vector<std::pair<QString,int>> topTenVec(10);
+    QString configDir = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    QString fileContent;
+    qDebug() << "Config Directory:" << configDir;
+    if (!configDir.endsWith("Yahtzee")) 
+    {
+        configDir += QString(QDir::separator()) + "Yahtzee";
+    }
+    QDir().mkpath(configDir);
+    QString filePath = configDir + QString(QDir::separator()) + "topTen.txt";
+    QFile file(filePath);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << output;
+        file.close();
+    } else {
+        qWarning() << "Failed to create file" << filePath;
+    }
+}   
+
+
+
 std::vector<std::pair<QString, int>> YahtzeeGame::checkTopTen(int currentScore)
 {
     std::vector<std::pair<QString,int>> topTenVec(10);

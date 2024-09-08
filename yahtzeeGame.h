@@ -1,6 +1,8 @@
 #include "Dice.h"
 #include <memory> // Include the memory header for shared_ptr
 #include <QString>
+#include <string>
+#include <iostream>
 
 class YahtzeeGame
 {
@@ -32,8 +34,9 @@ class YahtzeeGame
         bool highScore();
         void clearHighScore();
         Dice* getDiceArrayPtr(int slot);
-        int   getYahtzeePad(int row, int col);
+        int  getYahtzeePad(int row, int col);
         std::vector<std::pair<QString, int>> checkTopTen(int currentScore);
+        void writeTopTen(QString output);
 
 
     private:

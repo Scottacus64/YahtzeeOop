@@ -57,8 +57,10 @@ private:
     int lastColumnClicked = 0;
     YahtzeeGame* m_pYahtzeeGame;
     std::vector<std::pair<QString,int>> topTen;
+    QString scores[10];
+    QString inits[10];
     char initial = 'A';
-    QString entryInitials;
+    QString entryInitials = "_ _ _";
     QString assetPath;
 };
 #endif // YahtzeeUI_H
