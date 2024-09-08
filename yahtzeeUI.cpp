@@ -80,6 +80,7 @@ void YahtzeeUI::on_rollButton_clicked()
         }
         refreshTable();
 
+        ui->m_pad->setVisible(true);
         ui->m_topTen->setVisible(false);
         ui->m_leftArrow->setVisible(false);
         ui->m_rightArrow->setVisible(false);
@@ -87,6 +88,7 @@ void YahtzeeUI::on_rollButton_clicked()
         ui->m_initials->setVisible(false);
         ui->m_letter->setVisible(false);
         refreshTable();
+        newGame = false;
     }
 
     for(int i=0; i<6; i++)
@@ -320,6 +322,37 @@ void YahtzeeUI::on_enter_clicked()
     }
     ui->m_initials->setText(entryInitials);
 
+    if(newGame == true){
+        m_pYahtzeeGame-> clearPad();
+        m_pYahtzeeGame->clearHighScore();
+
+        for (QTableWidget* table : tables) {
+            table->setVisible(true);
+            //table->setEnabled();
+            table->clearFocus();
+            table->setCurrentItem(nullptr);
+            table->setCurrentCell(-1, -1);
+            table->clearSelection();
+        }
+        refreshTable();
+
+        ui->m_topTen->setVisible(false);
+        ui->m_tableTopTen->setVisible(false);
+        ui->m_leftArrow->setVisible(false);
+        ui->m_rightArrow->setVisible(false);
+        ui->m_enter->setVisible(false);
+        ui->m_initials->setVisible(false);
+        ui->m_letter->setVisible(false);
+        ui->m_rollButton->setVisible(true);
+        ui->m_tableUpper->setVisible(true);
+        ui->m_tableUpperTotal->setVisible(true);
+        ui->m_tableLower->setVisible(true);
+        ui->m_tableTotal->setVisible(true);
+        ui->m_pad->setVisible(true);
+        refreshTable();
+        newGame = false;
+    }
+
     if (!entryInitials.contains('_')) {
         ui->m_letter->setVisible(false);
         ui->m_leftArrow->setVisible(false);
@@ -333,6 +366,24 @@ void YahtzeeUI::on_enter_clicked()
             output = output + inits[i] + " " + scores[i] + " ";
         }
         m_pYahtzeeGame->writeTopTen(output);
+        QIcon enterIcon = QPixmap(QString(assetPath + "newGameRound.png"));
+        ui->m_enter->setIcon(enterIcon);
+        ui->m_enter->setIconSize(ui->m_enter->size());
+
+        std::vector<std::pair<QString, int>> topTenVec = m_pYahtzeeGame->checkTopTen(10);
+        int counter = 0;
+        for (const auto& pair : topTenVec) {
+            QString init = pair.first;
+            QString score = QString::number(pair.second);
+            inits[counter] = init;
+            scores[counter] = score;
+            QTableWidgetItem* initItem = ui->m_tableTopTen->item(counter, 0);
+            QTableWidgetItem* scoreItem = ui->m_tableTopTen->item(counter, 1);
+            if (initItem) {initItem->setText(init);}
+            if (scoreItem) {scoreItem->setText(score);} 
+            counter++;
+        }
+        newGame = true;
     }
     
 }
@@ -378,6 +429,7 @@ void YahtzeeUI::displayTopTen()
         // Retrieve and display top ten scores
         std::vector<std::pair<QString, int>> topTenVec = m_pYahtzeeGame->checkTopTen(total);
         int counter = 0;
+        bool nextBold = false;
 
         for (const auto& pair : topTenVec) {
             QString init = pair.first;
@@ -388,6 +440,7 @@ void YahtzeeUI::displayTopTen()
             // Retrieve the existing items in the table and set their values
             QTableWidgetItem* initItem = ui->m_tableTopTen->item(counter, 0);
             QTableWidgetItem* scoreItem = ui->m_tableTopTen->item(counter, 1);
+            
 
             if (initItem) {
                 if(init!="999"){
@@ -395,17 +448,21 @@ void YahtzeeUI::displayTopTen()
                 }
                 else{
                     initItem->setText(QString());
+                    nextBold = true;
+                    std::cout << "found 999" << std::endl;
                 }
-            } else {
-                // Optionally log or handle the case where item does not exist
-                qWarning() << "No QTableWidgetItem at " << counter << ",0";
-            }
+            } 
 
             if (scoreItem) {
+                QFont font = scoreItem->font();
+                if(nextBold == false){
+                     }
+                else{
+                    std::cout << "setting to red" << std::endl;
+                    nextBold = false;
+                }
                 scoreItem->setText(score);
-            } else {
-                qWarning() << "No QTableWidgetItem at " << counter << ",1";
-            }
+            } 
 
             counter++;
         }

@@ -55,6 +55,11 @@ public:
         QString appDir = QCoreApplication::applicationDirPath();
         assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
 
+        int hsFontId = QFontDatabase::addApplicationFont(assetPath + "Cookbook.ttf");
+        QString hsFontFamily;
+        hsFontFamily = QFontDatabase::applicationFontFamilies(hsFontId).at(0);
+        QFont hsFont(hsFontFamily);
+
         m_cup = new QLabel(YahtzeeUI);
         m_cup->setGeometry(QRect(0,0,180,200));
         QPixmap cupPix = QPixmap(QString(assetPath + "cup.png"));
@@ -70,21 +75,26 @@ public:
         
 
         m_topTen = new QLabel(YahtzeeUI);
-        m_topTen->setGeometry(QRect(150,220,450,550));
-        m_topTen->setStyleSheet("QLabel { background-color: white; color: black; font-size: 32px; text-align: center; }");
-        m_topTen->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        m_topTen->setGeometry(QRect(190,-50,500,1000));
+        QPixmap sheetPix = QPixmap(QString(assetPath + "highScoreSheet.png"));
+        QPixmap scaledSheet = sheetPix.scaled(m_topTen->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        m_topTen->setPixmap(scaledSheet);
+        m_topTen->setStyleSheet("QLabel { color: black; font-size: 32px; text-align: center; }");
+        //m_topTen->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         m_topTen->setVisible(false);
 
         m_initials = new QLabel(YahtzeeUI);
-        m_initials->setGeometry(QRect(325,800,100,75));
+        m_initials->setGeometry(QRect(320,790,100,75));
         m_initials->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-        m_initials->setStyleSheet("QLabel { background-color: white; color: black; font-size: 42px; text-align: center; }");
+        m_initials->setFont(hsFont);
+        m_initials->setStyleSheet("QLabel {color: white; font-size: 52px; text-align: center; }");
         m_initials->setText("_ _ _");
         m_initials->setVisible(false);
 
         m_letter = new QLabel(YahtzeeUI);
-        m_letter->setGeometry(QRect(350,840,75,75));
-        m_letter->setStyleSheet("QLabel { color: white; font-size: 42px; text-align: center; }");
+        m_letter->setGeometry(QRect(360,840,75,75));
+        m_letter->setFont(hsFont);
+        m_letter->setStyleSheet("QLabel {color: white; font-size: 52px; text-align: center; }");
         m_letter->setVisible(false);
 
         m_leftArrow = new QPushButton(YahtzeeUI);
@@ -128,7 +138,7 @@ public:
         QIcon rollButton = QPixmap(QString(assetPath + "newGame.png"));
         m_rollButton->setIcon(rollButton);
 
-        m_tableTopTen = createTableWidget(YahtzeeUI, 2, 10, QRect(225, 250, 300, 500), false);
+        m_tableTopTen = createTableWidget(YahtzeeUI, 2, 10, QRect(225, 340, 300, 500), false);
         m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 293, 270, 170), true);
         m_tableUpperTotal = createTableWidget(YahtzeeUI, 3, 3, QRect(413, 465, 270, 86), true);
         m_tableLower = createTableWidget(YahtzeeUI, 3, 11, QRect(413, 579, 270, 285), true);
@@ -226,7 +236,7 @@ public:
                 table->setColumnWidth(i, 300/2);
             }
             for (int i=0;i<rows;i++){
-                table->setRowHeight(i, 500/10);
+                table->setRowHeight(i, 40);
             }
             tableFont.setPointSize(42);
             for(int i=0;i<10;i++){

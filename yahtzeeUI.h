@@ -62,5 +62,6 @@ private:
     char initial = 'A';
     QString entryInitials = "_ _ _";
     QString assetPath;
+    bool newGame = true;
 };
 #endif // YahtzeeUI_H
