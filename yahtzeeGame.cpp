@@ -62,6 +62,7 @@ bool YahtzeeGame::highScore()
     return newHighScore;
 }
 
+
 void YahtzeeGame:: clearHighScore()
 {
     newHighScore = false;
@@ -89,7 +90,7 @@ void YahtzeeGame::setRolls(int inputRolls)
 bool YahtzeeGame::enterScore(int row, int col) 
 {
     gameOver = false;
-    bool done = true;
+    bool done;
     row = row;
     col = col;
     if (yahtzeePad[col][row] > 9999)
@@ -112,12 +113,16 @@ bool YahtzeeGame::enterScore(int row, int col)
         if (row == 15) {done = checkChance(col);}
         totalUp();
     }
+    if(col==lastEntry[0]&&row==lastEntry[1]){
+        done = true;
+    }
     return done;
 }
 
 
 bool YahtzeeGame::checkTopSection(int row, int col)
 {
+    bool cellChanged;
     if (yahtzeePad[col][row] > 9999)
     {
         int total = 0;
@@ -145,37 +150,54 @@ bool YahtzeeGame::checkTopSection(int row, int col)
         }
         lastEntry[0] = col;
         lastEntry[1] = row;
-    }   
-    return diceCanRoll;
+        cellChanged = true;
+    } 
+    else{
+        if(lastEntry[0]==col && lastEntry[1]==row){
+            cellChanged = true;
+        }
+        else{
+            cellChanged = false;
+        }
+    }  
+    return cellChanged;
 }
 
 
 bool YahtzeeGame::checkThreeOfaKind(int col)
 {
     int total = 0;
+    bool cellChanged;
+    std::cout << "col = " << lastEntry[0] << " row = " << lastEntry[1] << std::endl;
     int* values = bubbleSort(); 
-    if (values[0]==values[1]&&values[1]==values[2] || values[1]==values[2]&&values[2]==values[3] || values[2]==values[3]&&values[3]==values[4])
-    {
-        for (int i=0; i<5; i++)
+    if (yahtzeePad[col][9] > 9999){
+        if (values[0]==values[1]&&values[1]==values[2] || values[1]==values[2]&&values[2]==values[3] || values[2]==values[3]&&values[3]==values[4])
         {
-            total += values[i];
+            for (int i=0; i<5; i++)
+            {
+                total += values[i];
+            }
         }
-    }
-    else {total = 0;}
-    yahtzeePad[col][9] = total;
+        else {total = 0;}
+        yahtzeePad[col][9] = total;
 
-    yahtzeeCheck = true;
-    bool yBonus = checkYahtzee(col);
-    bool topFill = checkTopFill();
-    if (yBonus == true)
-    {
-        if (topFill == true)  {yahtzeeOn = true;}
-        checkYahtzeeBonus(col);
+        yahtzeeCheck = true;
+        bool yBonus = checkYahtzee(col);
+        bool topFill = checkTopFill();
+        if (yBonus == true)
+        {
+            if (topFill == true)  {yahtzeeOn = true;}
+            checkYahtzeeBonus(col);
+        }
+        
+        lastEntry[0] = col;
+        lastEntry[1] = 9;
+        cellChanged = true;
     }
-    
-    lastEntry[0] = col;
-    lastEntry[1] = 9;
-    return diceCanRoll;
+    else{
+        cellChanged = false;
+    }  
+    return cellChanged;
 }
 
 
@@ -183,28 +205,35 @@ bool YahtzeeGame::checkFourOfaKind(int col)
 {
     int total = 0;
     int* values = bubbleSort();
-    if (values[0]==values[1]&&values[1]==values[2]&&values[2]==values[3] || values[1]==values[2]&&values[2]==values[3]&&values[3]==values[4])
-        {
-            for (int i=0; i<5; i++)
+    bool cellChanged;
+    if (yahtzeePad[col][10] > 9999){
+        if (values[0]==values[1]&&values[1]==values[2]&&values[2]==values[3] || values[1]==values[2]&&values[2]==values[3]&&values[3]==values[4])
             {
-                total += values[i];
+                for (int i=0; i<5; i++)
+                {
+                    total += values[i];
+                }
             }
+        else {total = 0;}
+        yahtzeePad[col][10] = total;
+
+        yahtzeeCheck = true;
+        bool yBonus = checkYahtzee(col);
+        bool topFill = checkTopFill();
+        if (yBonus == true)
+        {
+            if (topFill == true)  {yahtzeeOn = true;}
+            checkYahtzeeBonus(col);
         }
-    else {total = 0;}
-    yahtzeePad[col][10] = total;
 
-    yahtzeeCheck = true;
-    bool yBonus = checkYahtzee(col);
-    bool topFill = checkTopFill();
-    if (yBonus == true)
-    {
-        if (topFill == true)  {yahtzeeOn = true;}
-        checkYahtzeeBonus(col);
+        lastEntry[0] = col;
+        lastEntry[1] = 10;
+        cellChanged = true;
     }
-
-    lastEntry[0] = col;
-    lastEntry[1] = 10;
-    return diceCanRoll;
+    else{
+        cellChanged = false;
+    }   
+    return cellChanged;
 }
 
 
@@ -212,79 +241,96 @@ bool YahtzeeGame::checkFullHouse(int col)
 {
     int total = 0;
     int* values = bubbleSort();
-    if(values[0]==values[1]&&values[1]==values[2]&&values[3]==values[4] || values[0]==values[1]&&values[2]==values[3]&&values[3]==values[4]) 
-        {total = 25;}
-    else {total = 0;}
-    yahtzeePad[col][11] = total;
+    bool cellChanged;
+    if (yahtzeePad[col][11] > 9999){
+        if(values[0]==values[1]&&values[1]==values[2]&&values[3]==values[4] || values[0]==values[1]&&values[2]==values[3]&&values[3]==values[4]) 
+            {total = 25;}
+        else {total = 0;}
+        yahtzeePad[col][11] = total;
 
-    yahtzeeCheck = true;
-    bool yBonus = checkYahtzee(col);
-    bool topFill = checkTopFill();
-    if (yBonus == true && topFill == true) 
-    {
-        yahtzeeOn = true; 
-        checkYahtzeeBonus(col);
+        yahtzeeCheck = true;
+        bool yBonus = checkYahtzee(col);
+        bool topFill = checkTopFill();
+        if (yBonus == true && topFill == true) 
+        {
+            yahtzeeOn = true; 
+            checkYahtzeeBonus(col);
+        }
+        cellChanged = true;
+        lastEntry[0] = col;
+        lastEntry[1] = 11;
     }
-
-
-    lastEntry[0] = col;
-    lastEntry[1] = 11;
-    return diceCanRoll;
+    else{
+        cellChanged = false;
+    }       
+    return cellChanged;
 }
 
 
 bool YahtzeeGame::checkSmallStraight(int col)
 {
     int* values = bubbleSort();
-    for (int i=0; i<4; i++)
-    {
-        if (values[i]==values[i+1]) {values[i]=0;}
+    bool cellChanged;
+    if (yahtzeePad[col][12] > 9999){
+        for (int i=0; i<4; i++)
+        {
+            if (values[i]==values[i+1]) {values[i]=0;}
+        }
+
+        int* sortedValues = bubbleSort2(values);
+        for (int i=0; i<5; i++) {values[i]=sortedValues[i];}
+
+        if(values[0]+1==values[1]&&values[1]+1==values[2]&&values[2]+1==values[3]&&values[0]>0 ||
+            values[1]+1==values[2]&&values[2]+1==values[3]&&values[3]+1==values[4]&&values[1]>0)
+            {yahtzeePad[col][12] = 30;}
+        else {yahtzeePad[col][12] = 0;}
+
+        yahtzeeCheck = true;
+        bool yBonus = checkYahtzee(col);
+        bool topFill = checkTopFill();
+        if (yBonus == true && topFill == true) 
+        {
+            yahtzeeOn = true; 
+            checkYahtzeeBonus(col);
+            yahtzeePad[col][12] = 30;
+        }
+        cellChanged = true;
+        lastEntry[0] = col;
+        lastEntry[1] = 12;
     }
-
-    int* sortedValues = bubbleSort2(values);
-    for (int i=0; i<5; i++) {values[i]=sortedValues[i];}
-
-    if(values[0]+1==values[1]&&values[1]+1==values[2]&&values[2]+1==values[3]&&values[0]>0 ||
-        values[1]+1==values[2]&&values[2]+1==values[3]&&values[3]+1==values[4]&&values[1]>0)
-        {yahtzeePad[col][12] = 30;}
-    else {yahtzeePad[col][12] = 0;}
-
-    yahtzeeCheck = true;
-    bool yBonus = checkYahtzee(col);
-    bool topFill = checkTopFill();
-    if (yBonus == true && topFill == true) 
-    {
-        yahtzeeOn = true; 
-        checkYahtzeeBonus(col);
-        yahtzeePad[col][12] = 30;
-    }
-
-    lastEntry[0] = col;
-    lastEntry[1] = 12;
-    return diceCanRoll;
+    else{
+        cellChanged = false;
+    }       
+    return cellChanged;
 }
 
 
 bool YahtzeeGame::checkLargeStraight(int col)
 {
     int* values = bubbleSort();
-    if (values[0]+1==values[1]&&values[1]+1==values[2]&&values[2]+1==values[3]&&values[3]+1==values[4])
-        {yahtzeePad[col][13] = 40;}
-    else {yahtzeePad[col][13] = 0;}
+    bool cellChanged;
+    if (yahtzeePad[col][13] > 9999){
+        if (values[0]+1==values[1]&&values[1]+1==values[2]&&values[2]+1==values[3]&&values[3]+1==values[4])
+            {yahtzeePad[col][13] = 40;}
+        else {yahtzeePad[col][13] = 0;}
 
-    yahtzeeCheck = true;
-    bool yBonus = checkYahtzee(col);
-    bool topFill = checkTopFill();
-    if (yBonus == true && topFill == true) 
-    {
-        yahtzeeOn = true; 
-        checkYahtzeeBonus(col);
-        yahtzeePad[col][13] = 40;
+        yahtzeeCheck = true;
+        bool yBonus = checkYahtzee(col);
+        bool topFill = checkTopFill();
+        if (yBonus == true && topFill == true) 
+        {
+            yahtzeeOn = true; 
+            checkYahtzeeBonus(col);
+            yahtzeePad[col][13] = 40;
+        }
+        cellChanged = true;
+        lastEntry[0] = col;
+        lastEntry[1] = 13;
     }
-
-    lastEntry[0] = col;
-    lastEntry[1] = 13;
-    return diceCanRoll;
+    else{
+        cellChanged = false;
+    }      
+    return cellChanged;
 }
 
 
@@ -302,13 +348,20 @@ bool YahtzeeGame::checkYahtzee(int col)
     }
     if (yahtzeeCheck == false)              // yahtzeeCheck is set to true if we are checking for a yahtzeeBonus
     {                                       // this would be false if we are checking to fill in a yahtzee cell
-        if (yahtzee == true)                // this section lets both the yahtzee cell and yahtzee bonus use the same method
-        {
-            yahtzeePad[col][14] = 50;
+        bool cellChanged;
+        if (yahtzeePad[col][14] > 9999){
+            if (yahtzee == true)            // this section lets both the yahtzee cell and yahtzee bonus use the same method
+            {
+                yahtzeePad[col][14] = 50;
+            }
+            else {yahtzeePad[col][14] = 0;}
+            lastEntry[0] = col;
+            lastEntry[1] = 14;
+            yahtzee = true;   //cellChanged
         }
-        else {yahtzeePad[col][14] = 0;}
-        lastEntry[0] = col;
-        lastEntry[1] = 14;
+        else{
+            yahtzee = false;
+        }       
     }
     yahtzeeCheck = false;                   // reset yahtzee check here as a central place that all bounus' go through
     return yahtzee;
@@ -351,24 +404,30 @@ void YahtzeeGame::checkYahtzeeBonus(int col)
 bool YahtzeeGame::checkChance(int col)
 {
     int total = 0;
-    for (int i=0; i<5; i++)
-    {
-        total += diceArray[i].getValue();
-    }
+    bool cellChanged;
+    if (yahtzeePad[col][15] > 9999){
+        for (int i=0; i<5; i++)
+        {
+            total += diceArray[i].getValue();
+        }
 
-    yahtzeeCheck = true;
-    bool yBonus = checkYahtzee(col);
-    bool topFill = checkTopFill();
-    if (yBonus == true && topFill == true) 
-    {
-        yahtzeeOn = true; 
-        checkYahtzeeBonus(col);
+        yahtzeeCheck = true;
+        bool yBonus = checkYahtzee(col);
+        bool topFill = checkTopFill();
+        if (yBonus == true && topFill == true) 
+        {
+            yahtzeeOn = true; 
+            checkYahtzeeBonus(col);
+        }
+        lastEntry[0] = col;
+        lastEntry[1] = 15;
+        yahtzeePad[col][15] = total;
+        cellChanged = true;
     }
-
-    lastEntry[0] = col;
-    lastEntry[1] = 15;
-    yahtzeePad[col][15] = total;
-    return diceCanRoll;
+    else{
+        cellChanged = false;
+    }       
+    return cellChanged;        
 }
 
 

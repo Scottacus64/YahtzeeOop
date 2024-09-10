@@ -63,5 +63,6 @@ private:
     QString entryInitials = "_ _ _";
     QString assetPath;
     bool newGame = true;
+    bool newCell = true;
 };
 #endif // YahtzeeUI_H

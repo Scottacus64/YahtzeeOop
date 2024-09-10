@@ -34,6 +34,7 @@ public:
     QTableWidget* m_tableUpper;
     QTableWidget* m_tableUpperTotal;
     QTableWidget* m_tableLower;
+    QTableWidget* m_tableLowerTotal;
     QTableWidget* m_tableTotal;
     QTableWidget* m_tableTopTen;
     QString assetPath;
@@ -69,7 +70,7 @@ public:
 
         m_pad = new QLabel(YahtzeeUI);
         m_pad->setGeometry(QRect(25,230,770,780));
-        QPixmap padPix = QPixmap(QString(assetPath + "background.png"));
+        QPixmap padPix = QPixmap(QString(assetPath + "pad.png"));
         QPixmap scaledPad = padPix.scaled(m_pad->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         m_pad->setPixmap(scaledPad);
         
@@ -135,13 +136,14 @@ public:
         m_rollButton->setGeometry(QRect(300, 190, 200, 60));
         m_rollButton->setStyleSheet("QPushButton { background-color: transparent; border: none; }");
         m_rollButton->setIconSize(QSize(200, 60));
-        QIcon rollButton = QPixmap(QString(assetPath + "newGame.png"));
+        QIcon rollButton = QPixmap(QString(assetPath + "rollDice.png"));
         m_rollButton->setIcon(rollButton);
 
         m_tableTopTen = createTableWidget(YahtzeeUI, 2, 10, QRect(225, 340, 300, 500), false);
         m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 293, 270, 170), true);
         m_tableUpperTotal = createTableWidget(YahtzeeUI, 3, 3, QRect(413, 465, 270, 86), true);
-        m_tableLower = createTableWidget(YahtzeeUI, 3, 11, QRect(413, 579, 270, 285), true);
+        m_tableLower = createTableWidget(YahtzeeUI, 3, 11, QRect(413, 578, 270, 200), true);
+        m_tableLowerTotal = createTableWidget(YahtzeeUI, 3, 4, QRect(413, 780, 270, 103), true);
         m_tableTotal = createTableWidget(YahtzeeUI, 3, 2, QRect(413, 905, 270, 78), true);
         
         QMetaObject::connectSlotsByName(YahtzeeUI);
@@ -170,6 +172,10 @@ public:
         table->verticalHeader()->setHighlightSections(false);
         table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
         table->setShowGrid(false);
+        table->setEnabled(false);
+        table->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        table->setSelectionMode(QAbstractItemView::SingleSelection);
         table->setStyleSheet(
             "QTableWidget { "
             "    background-color: transparent; "
