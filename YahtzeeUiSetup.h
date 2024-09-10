@@ -259,7 +259,6 @@ public:
         }
         return table;
     }
-
 };
 
 

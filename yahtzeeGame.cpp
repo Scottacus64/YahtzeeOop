@@ -560,7 +560,6 @@ void YahtzeeGame::writeTopTen(QString output)
     std::vector<std::pair<QString,int>> topTenVec(10);
     QString configDir = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
     QString fileContent;
-    qDebug() << "Config Directory:" << configDir;
     if (!configDir.endsWith("Yahtzee")) 
     {
         configDir += QString(QDir::separator()) + "Yahtzee";
@@ -576,7 +575,6 @@ void YahtzeeGame::writeTopTen(QString output)
         qWarning() << "Failed to create file" << filePath;
     }
 }   
-
 
 
 std::vector<std::pair<QString, int>> YahtzeeGame::checkTopTen(int currentScore)
@@ -599,9 +597,7 @@ std::vector<std::pair<QString, int>> YahtzeeGame::checkTopTen(int currentScore)
             QTextStream out(&file);
             out << "ABC 2000 BCD 1800 CDE 1700 DEF 1600 EFG 1500 FGH 1400 GHI 1300 HIJ 1200 IJK 1100 JKH 1000" ;
             file.close();
-        } else {
-            qWarning() << "Failed to create file" << filePath;
-        }
+        } 
     }
 
     // load the data
@@ -610,9 +606,7 @@ std::vector<std::pair<QString, int>> YahtzeeGame::checkTopTen(int currentScore)
         fileContent = in.readAll().trimmed();
         file.close(); 
         qDebug() << "File content:" << fileContent; 
-    } else {
-        qWarning() << "Failed to open file" << filePath; 
-    }
+    } 
 
     // form a QString with spaces between entries
     QStringList stringList = fileContent.split(' ', Qt::SkipEmptyParts);
