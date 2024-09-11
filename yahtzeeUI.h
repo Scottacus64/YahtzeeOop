@@ -64,6 +64,6 @@ private:
     QString assetPath;
     bool newGame = true;
     bool newCell = true;
-    bool isRolling;
+    bool isRolling = false;
 };
 #endif // YahtzeeUI_H

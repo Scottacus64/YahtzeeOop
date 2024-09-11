@@ -143,7 +143,7 @@ public:
         m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 293, 270, 170), true);
         m_tableUpperTotal = createTableWidget(YahtzeeUI, 3, 3, QRect(413, 465, 270, 86), true);
         m_tableLower = createTableWidget(YahtzeeUI, 3, 7, QRect(413, 578, 270, 200), true);
-        m_tableLowerTotal = createTableWidget(YahtzeeUI, 3, 4, QRect(413, 780, 270, 103), true);
+        m_tableLowerTotal = createTableWidget(YahtzeeUI, 3, 4, QRect(413, 777, 270, 110), true);
         m_tableTotal = createTableWidget(YahtzeeUI, 3, 2, QRect(413, 905, 270, 78), true);
         
         QMetaObject::connectSlotsByName(YahtzeeUI);
@@ -155,7 +155,7 @@ public:
         QString tableFontFamily;
         tableFontFamily = QFontDatabase::applicationFontFamilies(tableFontId).at(0);
         QFont tableFont(tableFontFamily);
-        tableFont.setPointSize(21);
+        tableFont.setPointSize(23);
 
         QTableWidget* table = new QTableWidget(parent);
         table->setFont(tableFont); 
