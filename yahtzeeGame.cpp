@@ -1,7 +1,5 @@
 #include "YahtzeeGame.h"
-#include <iostream>
 #include <utility>
-#include <string>
 #include <vector>
 #include <QString>
 #include <QStandardPaths>
@@ -19,6 +17,7 @@ YahtzeeGame::YahtzeeGame()
     rolls = 0;
 }
 
+
 YahtzeeGame::~YahtzeeGame()
 {}
 
@@ -27,6 +26,7 @@ void YahtzeeGame::clickDie(int i)
 {
     diceArray[i].clickDie();
 }
+
 
 void YahtzeeGame::rollDice(int i)
 {
@@ -168,7 +168,6 @@ bool YahtzeeGame::checkThreeOfaKind(int col)
 {
     int total = 0;
     bool cellChanged;
-    std::cout << "col = " << lastEntry[0] << " row = " << lastEntry[1] << std::endl;
     int* values = bubbleSort(); 
     if (yahtzeePad[col][9] > 9999){
         if (values[0]==values[1]&&values[1]==values[2] || values[1]==values[2]&&values[2]==values[3] || values[2]==values[3]&&values[3]==values[4])

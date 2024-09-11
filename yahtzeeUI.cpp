@@ -5,8 +5,6 @@
 #include <QPainter>
 #include <QDir>
 #include <utility>
-#include <string>
-#include <vector>
 
 
 YahtzeeUI::YahtzeeUI(QWidget *parent)
@@ -61,6 +59,13 @@ void YahtzeeUI::paintEvent(QPaintEvent *event) {
 
 void YahtzeeUI::on_rollButton_clicked()
 {
+    if(isRolling == true){return;}
+    isRolling = true;
+    ui->m_rollButton->setEnabled(false);
+    QTimer::singleShot(1000, this, [this]() {
+        ui->m_rollButton->setEnabled(true); 
+        isRolling = false;
+    });
     bool gameOver = m_pYahtzeeGame->checkGameOver();
     QString appDir = QCoreApplication::applicationDirPath();
     QString assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
@@ -79,10 +84,12 @@ void YahtzeeUI::on_rollButton_clicked()
         refreshTable();
         ui->m_tableUpper->setVisible(true);
         ui->m_tableLower->setVisible(true);
+        ui->m_tableUpperTotal->setVisible(true);
+        ui->m_tableLowerTotal->setVisible(true);
+        ui->m_tableTotal->setVisible(true);
         ui->m_tableUpper->setEnabled(true);
         ui->m_tableLower->setEnabled(true);
         ui->m_pad->setVisible(true);
-        std::cout << "Tables re-enabled" << std::endl;
 
         ui->m_topTen->setVisible(false);
         ui->m_leftArrow->setVisible(false);
@@ -229,7 +236,6 @@ void YahtzeeUI::on_tableUpper_cellClicked(int row, int col)
 
 void YahtzeeUI::on_tableLower_cellClicked(int row, int col)
 {
-    std::cout << row << ":" << col << std::endl;
     bool gameOver = m_pYahtzeeGame->checkGameOver();
     if (gameOver == false)
     {
@@ -239,7 +245,6 @@ void YahtzeeUI::on_tableLower_cellClicked(int row, int col)
         if(newCell == true){
             ui->m_rollButton->setIcon(QIcon(QPixmap(assetPath + "rollDice.png")));
         }
-        std::cout << newCell << std::endl;
         refreshTable();
         ui->m_tableLower->clearSelection();
         done = m_pYahtzeeGame->checkGameOver();
@@ -257,7 +262,7 @@ void YahtzeeUI::refreshTable()
         for (int col = 0; col < 3; col++)
         {
             int value = m_pYahtzeeGame->getYahtzeePad(row, col);
-            std::cout << "value = " << value << " " << row << ":"  << col <<std::endl;
+            //std::cout << "value = " << value << " " << row << ":"  << col <<std::endl;
             if (value < 10000)
             {
                 if(row<6){
@@ -311,7 +316,6 @@ void YahtzeeUI::refreshTable()
 
 void YahtzeeUI::on_leftArrow_clicked()
 {
-    std::cout << "Left Arrow Clicked" << std::endl;
     initial --;
     if (initial < 'A') {initial = 'Z';}
     ui->m_letter->setText(QString(QChar(initial)));
@@ -320,7 +324,6 @@ void YahtzeeUI::on_leftArrow_clicked()
 
 void YahtzeeUI::on_rightArrow_clicked()
 {
-    std::cout << "Right Arrow Clicked" << std::endl;
     initial ++;
     if(initial > 'Z'){initial = 'A';}
     ui->m_letter->setText(QString(QChar(initial)));
@@ -395,7 +398,6 @@ void YahtzeeUI::on_enter_clicked()
                 counter++;
             }
             newGame = true;
-            entryInitials = "_ _ _";
         }  
     }
 }
@@ -414,6 +416,8 @@ void YahtzeeUI::getInitials()
     ui->m_initials->setVisible(true);
     ui->m_letter->setVisible(true);
     ui->m_letter->setText("A");
+    entryInitials = "_ _ _";
+    ui->m_initials->setText(entryInitials);
 }
 
 

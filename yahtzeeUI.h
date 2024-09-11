@@ -3,7 +3,7 @@
 
 #include "YahtzeeGame.h"
 #include "YahtzeeUiSetup.h"
-#include <QLabel>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class YahtzeeUI; }
@@ -64,5 +64,6 @@ private:
     QString assetPath;
     bool newGame = true;
     bool newCell = true;
+    bool isRolling;
 };
 #endif // YahtzeeUI_H
