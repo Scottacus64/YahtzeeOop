@@ -142,7 +142,7 @@ public:
         m_tableTopTen = createTableWidget(YahtzeeUI, 2, 10, QRect(225, 340, 300, 500), false);
         m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 293, 270, 170), true);
         m_tableUpperTotal = createTableWidget(YahtzeeUI, 3, 3, QRect(413, 465, 270, 86), true);
-        m_tableLower = createTableWidget(YahtzeeUI, 3, 11, QRect(413, 578, 270, 200), true);
+        m_tableLower = createTableWidget(YahtzeeUI, 3, 7, QRect(413, 578, 270, 200), true);
         m_tableLowerTotal = createTableWidget(YahtzeeUI, 3, 4, QRect(413, 780, 270, 103), true);
         m_tableTotal = createTableWidget(YahtzeeUI, 3, 2, QRect(413, 905, 270, 78), true);
         
@@ -160,7 +160,7 @@ public:
         QTableWidget* table = new QTableWidget(parent);
         table->setFont(tableFont); 
         if(rows==6){table->setObjectName("tableUpper");}
-        if(rows==11){table->setObjectName("tableLower");}
+        if(rows==7){table->setObjectName("tableLower");}
         table->setColumnCount(columns);
         table->setRowCount(rows);
         table->setGeometry(geometry);

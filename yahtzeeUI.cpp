@@ -27,7 +27,6 @@ YahtzeeUI::YahtzeeUI(QWidget *parent)
     for (int i=0; i<5; i++) {ui->m_dieButton[i]->setIcon(pixmaps[0]);}
     int lastRowClicked = 0;
     int lastColumnClicked = 0;
-    std::cout << "Asset Path" << assetPath.toStdString() << std::endl;
 
     QIcon leftIcon = QPixmap(QString(assetPath + "LeftArrow.png"));
     ui->m_leftArrow->setIcon(leftIcon);
@@ -78,10 +77,12 @@ void YahtzeeUI::on_rollButton_clicked()
             table->clearSelection();
         }
         refreshTable();
-
-        ui->m_pad->setVisible(true);
+        ui->m_tableUpper->setVisible(true);
+        ui->m_tableLower->setVisible(true);
         ui->m_tableUpper->setEnabled(true);
         ui->m_tableLower->setEnabled(true);
+        ui->m_pad->setVisible(true);
+        std::cout << "Tables re-enabled" << std::endl;
 
         ui->m_topTen->setVisible(false);
         ui->m_leftArrow->setVisible(false);
@@ -305,15 +306,6 @@ void YahtzeeUI::refreshTable()
             }
         }
     }
-    
-    /*QTableWidgetItem* pItem = ui->m_tableTotal->item(1,1);
-    int gt = m_pYahtzeeGame->getGrandTotal();
-    if(newGame==false){
-        pItem->setText(QString::number(gt));
-    }
-    else{
-        pItem->setText(QString());
-    }*/
 }
 
 
@@ -347,6 +339,7 @@ void YahtzeeUI::on_enter_clicked()
             table->setCurrentItem(nullptr);
             table->setCurrentCell(-1, -1);
             table->clearSelection();
+            table->setEnabled(true);
         }
         refreshTable();
 
@@ -359,11 +352,6 @@ void YahtzeeUI::on_enter_clicked()
         ui->m_letter->setVisible(false);
 
         ui->m_rollButton->setVisible(true);
-        ui->m_tableUpper->setVisible(true);
-        ui->m_tableUpperTotal->setVisible(true);
-        ui->m_tableLower->setVisible(true);
-        ui->m_tableLowerTotal->setVisible(true);
-        ui->m_tableTotal->setVisible(true);
         ui->m_pad->setVisible(true);
         newCell = true;
         refreshTable();
@@ -407,6 +395,7 @@ void YahtzeeUI::on_enter_clicked()
                 counter++;
             }
             newGame = true;
+            entryInitials = "_ _ _";
         }  
     }
 }
