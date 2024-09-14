@@ -13,7 +13,7 @@ YahtzeeUI::YahtzeeUI(QWidget *parent)
     ui->setupUi(this);
 
     QString appDir = QCoreApplication::applicationDirPath();
-    assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
+    assetPath = QDir::cleanPath(appDir + QDir::separator() + "resources") + QDir::separator();
     background = QPixmap(QString(assetPath + "felt.png"));
 
     for(int i=0; i<13; i++)
@@ -40,6 +40,7 @@ YahtzeeUI::YahtzeeUI(QWidget *parent)
         ui->m_tableUpper,
         ui->m_tableUpperTotal,
         ui->m_tableLower,
+        ui->m_tableLowerTotal,
         ui->m_tableTotal
     };
 }
@@ -68,7 +69,7 @@ void YahtzeeUI::on_rollButton_clicked()
     });
     bool gameOver = m_pYahtzeeGame->checkGameOver();
     QString appDir = QCoreApplication::applicationDirPath();
-    QString assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
+    QString assetPath = QDir::cleanPath(appDir + QDir::separator() + "resources") + QDir::separator();
     if (gameOver == true)
     {
         m_pYahtzeeGame-> clearPad();

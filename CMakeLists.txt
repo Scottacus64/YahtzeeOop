@@ -16,10 +16,10 @@ set(PROJECT_SOURCES
     Main.cpp
     YahtzeeUI.cpp
     YahtzeeUI.h
-	Dice.h
-	Dice.cpp
-    YahtzeeGame.cpp 
-    YahtzeeGame.h 
+    Dice.h
+    Dice.cpp
+    YahtzeeGame.cpp
+    YahtzeeGame.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -27,22 +27,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET Yahtzee APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
-    if(ANDROID)
-        add_library(Yahtzee SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(Yahtzee
-            ${PROJECT_SOURCES}
-        )
-    endif()
+    add_executable(Yahtzee
+        ${PROJECT_SOURCES}
+    )
 endif()
 
 target_link_libraries(Yahtzee PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
@@ -65,7 +53,6 @@ if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(Yahtzee)
 endif()
 
-
 # Set application icon (macOS-specific)
 if(APPLE)
     set(MACOSX_BUNDLE_ICON_FILE Yahtzee.icns)
@@ -76,7 +63,4 @@ if(APPLE)
 endif()
 
 add_custom_command(TARGET Yahtzee POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/resources" "$<TARGET_FILE_DIR:Yahtzee>/pngs")
-
-
-
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/resources" "$<TARGET_FILE_DIR:Yahtzee>/resources")

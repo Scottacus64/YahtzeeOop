@@ -54,12 +54,25 @@ public:
         YahtzeeUI->move(500,0);
 
         QString appDir = QCoreApplication::applicationDirPath();
-        assetPath = QDir::cleanPath(appDir + QDir::separator() + "pngs") + QDir::separator();
+        this->assetPath = QDir::cleanPath(appDir + QDir::separator() + "resources") + QDir::separator();
+        qDebug() << "Asset Path: " << this->assetPath;
 
-        int hsFontId = QFontDatabase::addApplicationFont(assetPath + "Cookbook.ttf");
-        QString hsFontFamily;
-        hsFontFamily = QFontDatabase::applicationFontFamilies(hsFontId).at(0);
-        QFont hsFont(hsFontFamily);
+        QFont hsFont;
+
+        // Load the font
+        int hsFontId = QFontDatabase::addApplicationFont(this->assetPath + "Cookbook.ttf");
+        if (hsFontId == -1) {
+            qWarning() << "Failed to load font: Cookbook.ttf";
+        } else {
+            QStringList fontFamilies = QFontDatabase::applicationFontFamilies(hsFontId);
+            if (!fontFamilies.isEmpty()) {
+                QString hsFontFamily = fontFamilies.at(0);  // Get the first font family
+                QFont hsFont(hsFontFamily);
+                // Apply the font to relevant UI elements here...
+            } else {
+                qWarning() << "No font families found for Cookbook.ttf";
+            }
+        }
 
         m_cup = new QLabel(YahtzeeUI);
         m_cup->setGeometry(QRect(0,0,180,200));
@@ -85,7 +98,7 @@ public:
         m_topTen->setVisible(false);
 
         m_initials = new QLabel(YahtzeeUI);
-        m_initials->setGeometry(QRect(320,790,100,75));
+        m_initials->setGeometry(QRect(340,740,150,75));
         m_initials->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         m_initials->setFont(hsFont);
         m_initials->setStyleSheet("QLabel {color: white; font-size: 52px; text-align: center; }");
@@ -152,6 +165,14 @@ public:
     QTableWidget* createTableWidget(QWidget* parent, int columns, int rows, const QRect& geometry, bool scorePad) 
     {
         int tableFontId = QFontDatabase::addApplicationFont(assetPath + "Cookbook.ttf");
+
+        if (!QFontDatabase::applicationFontFamilies(tableFontId).isEmpty()) {
+            QString tableFontFamily = QFontDatabase::applicationFontFamilies(tableFontId).at(0);
+            // Proceed with creating the font
+        } else {
+            qWarning() << "No font families found for Cookbook.ttf in table";
+        }
+
         QString tableFontFamily;
         tableFontFamily = QFontDatabase::applicationFontFamilies(tableFontId).at(0);
         QFont tableFont(tableFontFamily);

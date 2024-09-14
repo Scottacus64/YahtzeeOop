@@ -607,8 +607,8 @@ std::vector<std::pair<QString, int>> YahtzeeGame::checkTopTen(int currentScore)
         qDebug() << "File content:" << fileContent; 
     } 
 
-    // form a QString with spaces between entries
     QStringList stringList = fileContent.split(' ', Qt::SkipEmptyParts);
+
 
     // make pairs of each two entries
     for(int i=0; i<10; i++)
