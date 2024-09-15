@@ -54,13 +54,12 @@ public:
         YahtzeeUI->move(500,0);
 
         QString appDir = QCoreApplication::applicationDirPath();
-        this->assetPath = QDir::cleanPath(appDir + QDir::separator() + "resources") + QDir::separator();
-        qDebug() << "Asset Path: " << this->assetPath;
+        assetPath = QDir::cleanPath(appDir + QDir::separator() + "resources") + QDir::separator();
 
         QFont hsFont;
 
         // Load the font
-        int hsFontId = QFontDatabase::addApplicationFont(this->assetPath + "Cookbook.ttf");
+        int hsFontId = QFontDatabase::addApplicationFont(assetPath + "Cookbook.ttf");
         if (hsFontId == -1) {
             qWarning() << "Failed to load font: Cookbook.ttf";
         } else {
@@ -98,7 +97,7 @@ public:
         m_topTen->setVisible(false);
 
         m_initials = new QLabel(YahtzeeUI);
-        m_initials->setGeometry(QRect(340,740,150,75));
+        m_initials->setGeometry(QRect(295,790,150,75));
         m_initials->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         m_initials->setFont(hsFont);
         m_initials->setStyleSheet("QLabel {color: white; font-size: 52px; text-align: center; }");
@@ -106,7 +105,7 @@ public:
         m_initials->setVisible(false);
 
         m_letter = new QLabel(YahtzeeUI);
-        m_letter->setGeometry(QRect(360,840,75,75));
+        m_letter->setGeometry(QRect(355,840,75,75));
         m_letter->setFont(hsFont);
         m_letter->setStyleSheet("QLabel {color: white; font-size: 52px; text-align: center; }");
         m_letter->setVisible(false);
