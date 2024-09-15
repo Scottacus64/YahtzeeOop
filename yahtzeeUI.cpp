@@ -60,7 +60,7 @@ void YahtzeeUI::on_rollButton_clicked()
     if(isRolling == true){return;}
     isRolling = true;
     ui->m_rollButton->setEnabled(false);
-    QTimer::singleShot(1000, this, [this]() {
+    QTimer::singleShot(500, this, [this]() {
         ui->m_rollButton->setEnabled(true); 
         isRolling = false;
     });
