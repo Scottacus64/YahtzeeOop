@@ -152,7 +152,7 @@ public:
         m_rollButton->setIcon(rollButton);
 
         m_tableTopTen = createTableWidget(YahtzeeUI, 2, 10, QRect(225, 340, 300, 500), false);
-        m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 293, 270, 170), true);
+        m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 290, 270, 175), true);
         m_tableUpperTotal = createTableWidget(YahtzeeUI, 3, 3, QRect(413, 465, 270, 86), true);
         m_tableLower = createTableWidget(YahtzeeUI, 3, 7, QRect(413, 578, 270, 200), true);
         m_tableLowerTotal = createTableWidget(YahtzeeUI, 3, 4, QRect(413, 777, 270, 110), true);
@@ -206,7 +206,7 @@ public:
             "    border: none; "
             "} "
             "QTableWidget::item { "
-            "    border: none; "
+            "    border: none;"      //2px solid red; "
             "}"
             "QTableWidget { "
             "    color: black; "  
@@ -216,15 +216,15 @@ public:
             "}"
         );
 
-        if(scorePad ==  true){
-            if(rows<6){table->setEnabled(false);}
+        if(scorePad ==  true){                              // this section deals with the score pad
+            if(rows<6){table->setEnabled(false);}           // not upper or lower tables
 
             for (int i = 0; i < columns; i++) {
                 table->setColumnWidth(i, 270 / 3);
             }
 
             for (int i = 0; i < rows; i++) {
-                if(rows < 3) {
+                if(rows < 3) {                              // tableTotal
                     if(i==0){
                         table->setRowHeight(i, 34);
                     }
@@ -232,7 +232,7 @@ public:
                         table->setRowHeight(i, 40);
                     }
                 }
-                else {
+                else {                                      // everything else
                     table->setRowHeight(i, 28);
                 }
                 
@@ -241,22 +241,26 @@ public:
                     QTableWidgetItem* item = new QTableWidgetItem();
                     item->setBackground(Qt::transparent);
                     item->setTextAlignment(Qt::AlignCenter);
-                    if(rows < 3) {
-                        QFont itemFont = item->font();
+                    QFont itemFont = item->font();
+                    if(rows < 3) {                          // tableTotal
                         if(i==0){
-                            itemFont.setPointSize(28);
+                            itemFont.setPointSize(24);
                             item->setFont(itemFont);
                         }
-                        else {
+                        else {                              // everything else
                             itemFont.setPointSize(34);
                             item->setFont(itemFont);
                         }
+                    }
+                    else{
+                        itemFont.setPointSize(24);
+                        item->setFont(itemFont);
                     }
                     table->setItem(i, j, item);
                 }
             }
         }
-        else{
+        else{                                               // this section deals with the top ten
             table->setEnabled(false);
             for (int i = 0; i < columns; i++) {
                 table->setColumnWidth(i, 300/2);
