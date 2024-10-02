@@ -385,7 +385,7 @@ void YahtzeeGame::checkYahtzeeBonus(int col)
 
     if (bonusCount > 2 && yahtzeeOn == true) // if all three yahtzees are filled in and we have a legit yahtzee...
     {
-        int bonus = yahtzeePad[col][17];     // get the bonus score
+        int bonus = yahtzeePad[col][16];     // get the bonus score
         if (bonus > 9999)                     // if it is blank (ie 10000)
         {
             yahtzeePad[col][16] = 100;

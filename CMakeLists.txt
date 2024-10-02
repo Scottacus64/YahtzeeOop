@@ -9,8 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+# Look only for Qt6
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
     Main.cpp
@@ -22,18 +22,12 @@ set(PROJECT_SOURCES
     YahtzeeGame.h
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(Yahtzee
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-else()
-    add_executable(Yahtzee
-        ${PROJECT_SOURCES}
-    )
-endif()
+qt_add_executable(Yahtzee
+    MANUAL_FINALIZATION
+    ${PROJECT_SOURCES}
+)
 
-target_link_libraries(Yahtzee PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Yahtzee PRIVATE Qt6::Widgets)
 
 set_target_properties(Yahtzee PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -49,9 +43,7 @@ install(TARGETS Yahtzee
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(Yahtzee)
-endif()
+qt_finalize_executable(Yahtzee)
 
 # Set application icon (macOS-specific)
 if(APPLE)
