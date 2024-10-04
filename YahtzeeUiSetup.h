@@ -154,7 +154,7 @@ public:
         m_tableTopTen = createTableWidget(YahtzeeUI, 2, 10, QRect(225, 340, 300, 500), false);
         m_tableUpper = createTableWidget(YahtzeeUI, 3, 6, QRect(413, 290, 270, 175), true);
         m_tableUpperTotal = createTableWidget(YahtzeeUI, 3, 3, QRect(413, 465, 270, 86), true);
-        m_tableLower = createTableWidget(YahtzeeUI, 3, 7, QRect(413, 578, 270, 200), true);
+        m_tableLower = createTableWidget(YahtzeeUI, 3, 7, QRect(413, 578, 270, 207), true);
         m_tableLowerTotal = createTableWidget(YahtzeeUI, 3, 4, QRect(413, 777, 270, 110), true);
         m_tableTotal = createTableWidget(YahtzeeUI, 3, 2, QRect(413, 905, 270, 78), true);
         
@@ -175,7 +175,7 @@ public:
         QString tableFontFamily;
         tableFontFamily = QFontDatabase::applicationFontFamilies(tableFontId).at(0);
         QFont tableFont(tableFontFamily);
-        tableFont.setPointSize(23);
+        tableFont.setPointSize(22);
 
         QTableWidget* table = new QTableWidget(parent);
         table->setFont(tableFont); 
@@ -206,7 +206,7 @@ public:
             "    border: none; "
             "} "
             "QTableWidget::item { "
-            "    border: none;"      //2px solid red; "
+            "    border: 2px none; "    //solid red; "
             "}"
             "QTableWidget { "
             "    color: black; "  
@@ -232,8 +232,11 @@ public:
                         table->setRowHeight(i, 40);
                     }
                 }
-                else {                                      // everything else
+                else if (rows == 6){
                     table->setRowHeight(i, 28);
+                }
+                else {                                      // everything else
+                    table->setRowHeight(i, 26);
                 }
                 
 
@@ -247,7 +250,7 @@ public:
                             itemFont.setPointSize(24);
                             item->setFont(itemFont);
                         }
-                        else {                              // everything else
+                        else {                              
                             itemFont.setPointSize(34);
                             item->setFont(itemFont);
                         }

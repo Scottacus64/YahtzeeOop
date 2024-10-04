@@ -22,10 +22,14 @@ set(PROJECT_SOURCES
     YahtzeeGame.h
 )
 
-qt_add_executable(Yahtzee
-    MANUAL_FINALIZATION
-    ${PROJECT_SOURCES}
+set_source_files_properties(Yahtzee.icns
+        PROPERTIES MACOSX_PACKAGE_LOCATION Resources
 )
+
+qt_add_executable(Yahtzee
+        MANUAL_FINALIZATION
+        ${PROJECT_SOURCES}
+    )
 
 target_link_libraries(Yahtzee PRIVATE Qt6::Widgets)
 
