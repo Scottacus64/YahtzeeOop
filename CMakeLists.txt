@@ -9,6 +9,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+set(CMAKE_INSTALL_RPATH "@executable_path/../Frameworks")
+
 # Look only for Qt6
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
@@ -23,7 +26,7 @@ set(PROJECT_SOURCES
 )
 
 set_source_files_properties(Yahtzee.icns
-        PROPERTIES MACOSX_PACKAGE_LOCATION Resources
+        PROPERTIES MACOSX_PACKAGE_LOCATION resources
 )
 
 qt_add_executable(Yahtzee
@@ -69,5 +72,5 @@ install(TARGETS Yahtzee
 set(CPACK_GENERATOR DragNDrop)
 set(CPACK_PACKAGE_FILE_NAME Yahtzee-${CMAKE_PROJECT_VERSION}-macos-arm64)
 #set(CPACK_DMG_VOLUME_NAME "Yahtzee ${CMAKE_PROJECT_VERSION}")
-set(CPACK_PACKAGE_ICON ${CMAKE_CURRENT_SOURCE_DIR}/resounces/Yahtzee.icns)
+set(CPACK_PACKAGE_ICON ${CMAKE_CURRENT_SOURCE_DIR}/resources/Yahtzee.icns)
 include(CPack)   
