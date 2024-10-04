@@ -60,3 +60,14 @@ endif()
 
 add_custom_command(TARGET Yahtzee POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/resources" "$<TARGET_FILE_DIR:Yahtzee>/resources")
+
+
+install(TARGETS Yahtzee
+    BUNDLE DESTINATION .
+)
+
+set(CPACK_GENERATOR DragNDrop)
+set(CPACK_PACKAGE_FILE_NAME Yahtzee-${CMAKE_PROJECT_VERSION}-macos-arm64)
+#set(CPACK_DMG_VOLUME_NAME "Yahtzee ${CMAKE_PROJECT_VERSION}")
+set(CPACK_PACKAGE_ICON ${CMAKE_CURRENT_SOURCE_DIR}/resounces/Yahtzee.icns)
+include(CPack)   
